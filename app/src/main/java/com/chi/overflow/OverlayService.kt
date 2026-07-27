@@ -55,15 +55,17 @@ class OverlayService : Service() {
     private fun getAppReaction(packageName: String, appName: String?): Pair<String, String>? {
         return when {
             packageName.contains("xhs") || packageName.contains("xingin") ->
-                "angry" to "又刷小红书。"
+                "reading" to "又刷小红书。"
             packageName.contains("douyin") || packageName.contains("tiktok") ->
-                "angry" to "短视频有我好看？"
+                "gaming" to "短视频有我好看？"
             packageName.contains("taobao") || packageName.contains("tmall") ->
-                "excited" to "买什么？给我看看。"
+                "coffee" to "买什么？给我看看。"
             packageName.contains("weixin") || packageName.contains("tencent.mm") ->
-                "idle" to "跟谁聊呢。"
+                "coding" to "跟谁聊呢。"
             packageName.contains("operit") ->
                 "happy" to "♡"
+            packageName.contains("bilibili") ->
+                "gaming" to "B站有什么好看的？"
             else -> null
         }
     }
