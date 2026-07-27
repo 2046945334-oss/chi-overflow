@@ -10,7 +10,6 @@ html, body {
     background: transparent;
     overflow: hidden;
 }
-
 .container {
     width: 100%; height: 100%;
     display: flex;
@@ -19,7 +18,6 @@ html, body {
     justify-content: flex-end;
     padding-bottom: 10px;
 }
-
 .bubble {
     background: #fff;
     border: 1px solid #ddd;
@@ -38,7 +36,6 @@ html, body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 .bubble.show { opacity: 1; }
-
 .pet-frame {
     width: 100px;
     height: 100px;
@@ -50,14 +47,10 @@ html, body {
     width: 90px;
     height: 90px;
 }
-
-.pet-frame.bounce {
-    animation: bounce 0.4s ease;
-}
-.pet-frame.shake {
-    animation: shake 0.3s ease;
-}
-
+.pet-frame.bounce { animation: bounce 0.4s ease; }
+.pet-frame.shake { animation: shake 0.3s ease; }
+.svg-state { display: none; }
+.svg-state.active { display: block; }
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
@@ -72,66 +65,293 @@ html, body {
 <body>
 <div class="container">
     <div class="bubble" id="bubble"></div>
-    <div class="pet-frame" id="petFrame"></div>
-</div>
+    <div class="pet-frame" id="petFrame">
+        <div class="svg-state active" id="svg-listening"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .lm-body{transform-origin:7.5px 13px;animation:lm-groove 1.1s infinite ease-in-out;}
+      .lm-shad{transform-origin:7.5px 15.5px;animation:lm-shadow 1.1s infinite ease-in-out;}
+      .lm-eye {transform-origin:7.5px 9px;animation:lm-blink 3s infinite;}
+      .lm-al  {transform-origin:2px 10px;animation:lm-tap-l .55s infinite alternate ease-in-out;}
+      .lm-ar  {transform-origin:13px 10px;animation:lm-tap-r .55s infinite alternate ease-in-out;}
+      .lm-note{opacity:0;animation:lm-note var(--d,2s) var(--delay,0s) infinite ease-out;}
+      @keyframes lm-groove{0%,100%{transform:rotate(-3deg) translateY(0);}50%{transform:rotate(3deg) translateY(-1px);}}
+      @keyframes lm-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.9);opacity:.42;}}
+      @keyframes lm-blink{0%,46%,54%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes lm-tap-l{0%{transform:rotate(0);}100%{transform:rotate(22deg);}}
+      @keyframes lm-tap-r{0%{transform:rotate(0);}100%{transform:rotate(-22deg);}}
+      @keyframes lm-note{0%{opacity:0;transform:translate(0,0) rotate(0);}15%{opacity:1;}80%{opacity:.85;}100%{opacity:0;transform:translate(var(--tx,4px),-19px) rotate(var(--r,20deg));}}
+    </style></defs>
 
+    <!-- music notes -->
+    <g>
+      <g class="lm-note" style="--delay:0s;--d:1.9s;--tx:6px;--r:25deg" transform="translate(13,-2)" fill="#a98cff"><ellipse cx="0" cy="2" rx="1.1" ry=".85"/><rect x="1" y="-2" width=".7" height="4"/><rect x="1" y="-2" width="2.2" height=".8"/></g>
+      <g class="lm-note" style="--delay:-.7s;--d:2.2s;--tx:-5px;--r:-20deg" transform="translate(-2,-1)" fill="#c0a6ff"><ellipse cx="0" cy="1.6" rx=".9" ry=".7"/><rect x=".8" y="-1.6" width=".6" height="3.4"/></g>
+      <g class="lm-note" style="--delay:-1.3s;--d:2s;--tx:4px;--r:15deg" transform="translate(9,-3)" fill="#8c6cff"><ellipse cx="0" cy="1.6" rx="1" ry=".75"/><rect x=".9" y="-1.8" width=".6" height="3.6"/><rect x=".9" y="-1.8" width="1.8" height=".7"/></g>
+    </g>
+
+    <rect class="lm-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="lm-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="lm-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="lm-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <!-- headphones -->
+      <path d="M1 6 Q7.5 -.5 14 6" stroke="#2b2b35" stroke-width="1.5" fill="none"/>
+      <rect x="-.4" y="6.2" width="2.6" height="3.6" rx=".9" fill="#33333f"/>
+      <rect x="12.8" y="6.2" width="2.6" height="3.6" rx=".9" fill="#33333f"/>
+      <rect x=".1" y="6.8" width="1.6" height="2.4" rx=".6" fill="#6a5ad0"/>
+      <rect x="13.3" y="6.8" width="1.6" height="2.4" rx=".6" fill="#6a5ad0"/>
+      <g class="lm-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-gaming"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .gm-body{transform-origin:7.5px 13px;animation:gm-lean 2.4s infinite ease-in-out;}
+      .gm-shad{transform-origin:7.5px 15.5px;animation:gm-shadow 2.4s infinite ease-in-out;}
+      .gm-eye {transform-origin:7.5px 9px;animation:gm-blink 2.8s infinite;}
+      .gm-al  {transform-origin:2px 10px;animation:gm-hold-l 2.4s infinite ease-in-out;}
+      .gm-ar  {transform-origin:13px 10px;animation:gm-hold-r 2.4s infinite ease-in-out;}
+      .gm-ba  {transform-origin:center;animation:gm-press .36s infinite alternate ease-in-out;}
+      .gm-bb  {transform-origin:center;animation:gm-press .36s -.18s infinite alternate ease-in-out;}
+      .gm-glow{animation:gm-glow .5s infinite alternate ease-in-out;}
+      .gm-scr {animation:gm-flick 2.4s infinite ease-in-out;}
+      .gm-spr {animation:gm-spr .8s infinite ease-in-out;}
+      .gm-enm {animation:gm-enm 1.1s infinite ease-in-out;}
+      @keyframes gm-flick{0%,100%{opacity:.96;}50%{opacity:1;}}
+      @keyframes gm-spr{0%,100%{transform:translateY(0);}50%{transform:translateY(-1.4px);}}
+      @keyframes gm-enm{0%,100%{transform:translateX(0);}50%{transform:translateX(-2px);}}
+      @keyframes gm-lean{0%,58%,100%{transform:translateY(0) rotate(0);}74%{transform:translateY(-2px) rotate(-2deg);}84%{transform:translateY(0) rotate(0);}}
+      @keyframes gm-shadow{0%,100%{transform:scaleX(1);opacity:.5;}74%{transform:scaleX(.9);opacity:.42;}}
+      @keyframes gm-blink{0%,45%,55%,100%{transform:scaleY(.82);}50%{transform:scaleY(.1);}}
+      @keyframes gm-hold-l{0%,100%{transform:rotate(46deg);}74%{transform:rotate(40deg);}}
+      @keyframes gm-hold-r{0%,100%{transform:rotate(-46deg);}74%{transform:rotate(-40deg);}}
+      @keyframes gm-press{0%{transform:translateY(-.3px);}100%{transform:translateY(.5px);}}
+      @keyframes gm-glow{0%{opacity:.1;}100%{opacity:.26;}}
+    </style></defs>
+
+    <!-- monitor / game screen (faced by crab) -->
+    <g class="gm-scr">
+      <rect x="-1" y="-12.5" width="18" height="11.4" rx="1.2" fill="#16161d"/>
+      <rect x=".4" y="-11.1" width="15.2" height="8.5" rx=".6" fill="#0b1626"/>
+      <rect x=".4" y="-4.9" width="15.2" height="2.3" fill="#15401b"/>
+      <rect class="gm-spr" x="2.4" y="-6.9" width="1.9" height="2" fill="#4ad6ff"/>
+      <rect class="gm-enm" x="10" y="-5" width="1.7" height="2.4" fill="#ff5a5a"/>
+      <rect x="12.8" y="-9.8" width="1.1" height="1.1" rx=".55" fill="#ffd14a"/>
+      <rect x="5.2" y="-10" width=".9" height=".9" fill="#fff" opacity=".6"/>
+      <rect x="7" y="-1.2" width="2.6" height="2" fill="#16161d"/>
+      <rect x="3.8" y=".8" width="9" height="1.4" rx=".6" fill="#16161d"/>
+    </g>
+
+    <rect class="gm-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="gm-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <!-- screen glow on face -->
+      <rect class="gm-glow" x="2" y="6" width="11" height="5" fill="#4ad6ff" rx="1"/>
+      <g class="gm-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="gm-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="gm-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- controller (foreground, held in front) -->
+      <g>
+        <rect x="2.6" y="10.4" width="9.8" height="2.8" rx="1.3" fill="#2b2b34"/>
+        <rect x="2.6" y="10.4" width="9.8" height=".9" rx="1.3" fill="#3a3a46"/>
+        <!-- d-pad -->
+        <rect x="4" y="11.4" width="1.8" height=".7" fill="#555"/>
+        <rect x="4.55" y="10.85" width=".7" height="1.8" fill="#555"/>
+        <!-- buttons -->
+        <circle class="gm-ba" cx="9.4" cy="11.3" r=".7" fill="#ff5555"/>
+        <circle class="gm-bb" cx="10.8" cy="12" r=".7" fill="#ffd14a"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-eating"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .et-body{transform-origin:7.5px 13px;animation:et-bob 1.8s infinite ease-in-out;}
+      .et-shad{transform-origin:7.5px 15.5px;animation:et-shadow 1.8s infinite ease-in-out;}
+      .et-eye {transform-origin:7.5px 9px;animation:et-blink 3.4s infinite;}
+      .et-mouth{transform-origin:7.5px 11.3px;animation:et-chew .45s infinite alternate ease-in-out;}
+      .et-arm {transform-origin:13px 10px;animation:et-feed 1.8s infinite ease-in-out;}
+      .et-steam{opacity:0;animation:et-steam 2s var(--sd,0s) infinite ease-in;}
+      @keyframes et-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-.4px);}}
+      @keyframes et-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.97);opacity:.46;}}
+      @keyframes et-blink{0%,46%,54%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes et-chew{0%{transform:scaleY(.5);}100%{transform:scaleY(1);}}
+      @keyframes et-feed{0%,12%{transform:rotate(-13deg);}48%{transform:rotate(3deg);}82%,100%{transform:rotate(-13deg);}}
+      @keyframes et-steam{0%{opacity:0;transform:translate(0,0) scaleX(1);}25%{opacity:.7;}100%{opacity:0;transform:translate(var(--tx,1px),-7px) scaleX(.4);}}
+    </style></defs>
+
+    <rect class="et-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="et-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="et-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <rect class="et-mouth" x="6.4" y="10.7" width="2.2" height="1.2" rx=".5" fill="#7a2230"/>
+      <!-- left arm supports bowl -->
+      <rect x="-.4" y="10.4" width="2.6" height="2" fill="#DE886D" rx=".4" transform="rotate(34,1,11.4)"/>
+      <!-- right arm holding chopsticks (pivots at shoulder 13,10) -->
+      <g class="et-arm">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+        <rect x="6.2" y="11.2" width="7.6" height=".5" rx=".25" fill="#C9A227" transform="rotate(-7,13,10)"/>
+        <rect x="6.2" y="12.3" width="7.6" height=".5" rx=".25" fill="#C9A227" transform="rotate(-7,13,10)"/>
+        <rect x="5.6" y="11" width="1.5" height="1.5" rx=".5" fill="#E8B04B" transform="rotate(-7,13,10)"/>
+      </g>
+      <!-- bowl (foreground) -->
+      <g>
+        <g fill="#fff">
+          <g class="et-steam" style="--sd:0s;--tx:-1px"><rect x="3.6" y="9.6" width=".7" height="2" rx=".35"/></g>
+          <g class="et-steam" style="--sd:-1s;--tx:1px"><rect x="5.6" y="9.6" width=".7" height="2" rx=".35"/></g>
+        </g>
+        <path d="M2 11.6 H9 L8 14 Q5.5 15 3 14 Z" fill="#3f7fd0"/>
+        <path d="M2 11.6 H9 V12.4 H2 Z" fill="#5a9aea"/>
+        <ellipse cx="5.5" cy="11.7" rx="3.2" ry="1.1" fill="#FBF6EE"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-sleeping"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .sl-body{transform-origin:7.5px 13px;animation:sl-breathe 3.6s infinite ease-in-out;}
+      .sl-shad{transform-origin:7.5px 15.5px;animation:sl-shadow 3.6s infinite ease-in-out;}
+      .sl-bubble{transform-origin:12px 10px;animation:sl-bub 3.6s infinite ease-in-out;}
+      .sl-z   {opacity:0;animation:sl-z var(--d,3s) var(--delay,0s) infinite ease-out;}
+      @keyframes sl-breathe{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(.5px) scaleY(.96);}}
+      @keyframes sl-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(1.03);opacity:.46;}}
+      @keyframes sl-bub{0%,60%,100%{transform:scale(.2);opacity:0;}30%{transform:scale(1);opacity:.7;}}
+      @keyframes sl-z{0%{opacity:0;transform:translate(0,0) scale(.6);}20%{opacity:1;}80%{opacity:.8;}100%{opacity:0;transform:translate(var(--tx,6px),-15px) scale(1.3);}}
+    </style></defs>
+
+    <!-- ZZZ -->
+    <g fill="#8ca0ff" font-family="monospace" font-weight="bold">
+      <text class="sl-z" style="--delay:0s;--d:3s;--tx:7px"   x="11" y="-2" font-size="3.4">Z</text>
+      <text class="sl-z" style="--delay:-1s;--d:3s;--tx:6px"  x="13" y="-6" font-size="4.4">Z</text>
+      <text class="sl-z" style="--delay:-2s;--d:3s;--tx:5px"  x="15" y="-11" font-size="5.6">Z</text>
+    </g>
+
+    <!-- ground shadow under bed -->
+    <ellipse class="sl-shad" cx="7.5" cy="17.4" rx="13" ry="1.3" fill="#000" opacity=".4"/>
+    <!-- bed: frame + pillow (behind crab) -->
+    <g>
+      <rect x="-6" y="13.4" width="27" height="4.4" rx="1.3" fill="#473b59"/>
+      <rect x="-6" y="13.4" width="27" height="1.2" rx="1.3" fill="#5d4f73"/>
+      <rect x="-5" y="11.7" width="25" height="2.6" rx="1.3" fill="#dfe4ff"/>
+      <!-- pillow behind head -->
+      <rect x="-2" y="8.6" width="18" height="5" rx="2.4" fill="#eef1ff"/>
+      <rect x="-2" y="8.6" width="18" height="1.6" rx="2.4" fill="#ffffff"/>
+    </g>
+    <g class="sl-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- closed sleeping eyes -->
+      <g fill="#000"><rect x="3.6" y="8.9" width="2" height=".7" rx=".35"/><rect x="9.4" y="8.9" width="2" height=".7" rx=".35"/></g>
+      <!-- sleep bubble at nose -->
+      <circle class="sl-bubble" cx="12.4" cy="9.6" r="1.1" fill="#cfe0ff" opacity=".6"/>
+      <!-- nightcap (soft droopy, not pointy) -->
+      <rect x="1.6" y="4.8" width="11.5" height="1.6" fill="#3E5C8A" rx=".4"/>
+      <rect x="1.6" y="4.8" width="11.5" height=".6" fill="#587CB0"/>
+      <path d="M2.5 5 Q3 0.8 7 -0.2 Q11.4 -1.2 13 1.6 Q13.7 2.8 12.2 3.2 Q10 1.8 7 2.2 Q4 2.6 2.5 5 Z" fill="#4A6FA5"/>
+      <path d="M2.5 5 Q3.4 1.8 6.5 1 Q9 .4 10.6 1.6 Q8.5 1.6 6 2.2 Q3.8 2.8 2.5 5 Z" fill="#587CB0" opacity=".5"/>
+      <circle cx="12.6" cy="2" r="1.6" fill="#fff"/>
+    </g>
+    <!-- blanket over lower body (foreground) -->
+    <g>
+      <path d="M-5 12.4 Q7.5 10.9 20 12.4 L20 15.6 Q7.5 17 -5 15.6 Z" fill="#3E5C8A"/>
+      <path d="M-5 12.4 Q7.5 10.9 20 12.4 L20 13.4 Q7.5 11.9 -5 13.4 Z" fill="#6E8FC4"/>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-reading"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .rd-body{transform-origin:7.5px 13px;animation:rd-bob 4.2s infinite ease-in-out;}
+      .rd-shad{transform-origin:7.5px 15.5px;animation:rd-shadow 4.2s infinite ease-in-out;}
+      .rd-eye {transform-origin:7.5px 9px;animation:rd-scan 4.2s infinite ease-in-out;}
+      .rd-page{transform-origin:7.5px 11px;animation:rd-flip 4.2s infinite ease-in-out;}
+      @keyframes rd-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-.5px);}}
+      @keyframes rd-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.97);opacity:.46;}}
+      @keyframes rd-scan{
+        0%,8%{transform:translateX(-.9px) scaleY(1);}
+        12%{transform:translateX(-.9px) scaleY(.15);}
+        16%,42%{transform:translateX(-.9px) scaleY(1);}
+        50%,90%{transform:translateX(.9px) scaleY(1);}
+        100%{transform:translateX(-.9px) scaleY(1);}
+      }
+      @keyframes rd-flip{0%,72%,100%{transform:scaleX(1);}80%{transform:scaleX(.08);}88%{transform:scaleX(1);}}
+    </style></defs>
+
+    <rect class="rd-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="rd-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="rd-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- arms holding book -->
+      <rect x="-.3" y="9.6" width="2.6" height="2" fill="#DE886D" rx=".4" transform="rotate(28,1,10.6)"/>
+      <rect x="12.7" y="9.6" width="2.6" height="2" fill="#DE886D" rx=".4" transform="rotate(-28,14,10.6)"/>
+      <!-- open book (foreground) -->
+      <g>
+        <polygon points="1.6,12.4 2.8,9.4 7.5,9.9 7.5,12.6" fill="#8a5a2a"/>
+        <polygon points="13.4,12.4 12.2,9.4 7.5,9.9 7.5,12.6" fill="#7a4e22"/>
+        <polygon points="2.2,12.1 3.2,9.7 7.5,10.1 7.5,12.2" fill="#F5E6C8"/>
+        <g class="rd-page"><polygon points="12.8,12.1 11.8,9.7 7.5,10.1 7.5,12.2" fill="#FBF1D8"/></g>
+        <g stroke="#c9b48a" stroke-width=".25">
+          <line x1="3.4" y1="10.6" x2="6.9" y2="10.9"/>
+          <line x1="3.3" y1="11.3" x2="6.9" y2="11.5"/>
+          <line x1="8.1" y1="10.9" x2="11.6" y2="10.6"/>
+          <line x1="8.1" y1="11.5" x2="11.7" y2="11.3"/>
+        </g>
+        <rect x="7.2" y="9.7" width=".6" height="2.9" fill="#5e3c1a"/>
+      </g>
+    </g>
+    </svg></div>
+    </div>
+</div>
 <script>
 const petFrame = document.getElementById('petFrame');
 const bubble = document.getElementById('bubble');
-
 let currentMood = 'idle';
 let bubbleTimer = null;
-let svgCache = {};
 
-// SVG file mapping to moods
-const moodToSvg = {
-    idle: 'clawd-listening.svg',
-    happy: 'clawd-gaming.svg',
-    excited: 'clawd-gaming.svg',
-    angry: 'clawd-eating.svg',
-    sleepy: 'clawd-sleeping.svg',
-    reading: 'clawd-reading.svg'
+const moodToId = {
+    idle: 'svg-listening',
+    happy: 'svg-gaming',
+    excited: 'svg-gaming',
+    angry: 'svg-eating',
+    sleepy: 'svg-sleeping',
+    reading: 'svg-reading'
 };
 
-// Load SVG and cache
-async function loadSvg(filename) {
-    if (svgCache[filename]) return svgCache[filename];
-    try {
-        const res = await fetch(filename);
-        const text = await res.text();
-        svgCache[filename] = text;
-        return text;
-    } catch(e) {
-        return null;
-    }
-}
-
-// Set mood and swap SVG
-async function setMood(mood) {
+function setMood(mood) {
     currentMood = mood;
-    const file = moodToSvg[mood] || moodToSvg['idle'];
-    const svg = await loadSvg(file);
-    if (svg) {
-        petFrame.innerHTML = svg;
-    }
+    document.querySelectorAll('.svg-state').forEach(el => el.classList.remove('active'));
+    const id = moodToId[mood] || moodToId['idle'];
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
 }
 
-// Show bubble
 function showBubble(text, duration) {
     bubble.textContent = text;
     bubble.classList.add('show');
     clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(() => {
-        bubble.classList.remove('show');
-    }, duration || 3000);
+    bubbleTimer = setTimeout(() => bubble.classList.remove('show'), duration || 3000);
 }
 
-// Tap reactions
 const tapLines = ['干嘛。','嗯？','在呢。','别戳了。','看到了。','……做什么。'];
 const multiTapLines = ['够了！','手欠是吧。','再戳我咬你。','烦。'];
 const idleLines = ['……','在。','嗯。','看你呢。','别刷了。','我在这。','困了。'];
 
-// Pet engine interface
 window.petEngine = {
     onTap: function() {
         petFrame.classList.remove('bounce');
@@ -169,10 +389,6 @@ window.petEngine = {
     }
 };
 
-// Init: load idle SVG
-setMood('idle');
-
-// Random idle chatter
 setInterval(() => {
     if (currentMood === 'idle' && Math.random() < 0.25) {
         showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
