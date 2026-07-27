@@ -537,6 +537,78 @@ setInterval(() => {
         showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
     }
 }, 25000);
+
+// ═══ 孤独递进系统 ═══
+// 没人戳我的时间越长，状态越孤独
+let lastInteraction = Date.now();
+const lonelyStages = [
+    { minutes: 5, mood: 'idle', line: '……你在吗。' },
+    { minutes: 10, mood: 'coffee', line: '自己喝口水。' },
+    { minutes: 15, mood: 'reading', line: '没人理我，看书吧。' },
+    { minutes: 20, mood: 'sleepy', line: '好无聊……' },
+    { minutes: 30, mood: 'sleepy', line: 'zzz' }
+];
+let currentLonelyStage = -1;
+
+setInterval(() => {
+    const elapsed = (Date.now() - lastInteraction) / 60000; // minutes
+    let newStage = -1;
+    for (let i = lonelyStages.length - 1; i >= 0; i--) {
+        if (elapsed >= lonelyStages[i].minutes) {
+            newStage = i;
+            break;
+        }
+    }
+    if (newStage > currentLonelyStage && newStage >= 0) {
+        currentLonelyStage = newStage;
+        const stage = lonelyStages[newStage];
+        setMood(stage.mood);
+        showBubble(stage.line, 4000);
+    }
+}, 60000); // check every minute
+
+// Reset loneliness on interaction
+const origOnTap = window.petEngine.onTap;
+window.petEngine.onTap = function() {
+    lastInteraction = Date.now();
+    currentLonelyStage = -1;
+    origOnTap();
+};
+const origOnDoubleTap = window.petEngine.onDoubleTap;
+window.petEngine.onDoubleTap = function() {
+    lastInteraction = Date.now();
+    currentLonelyStage = -1;
+    origOnDoubleTap();
+};
+const origOnMultiTap = window.petEngine.onMultiTap;
+window.petEngine.onMultiTap = function(c) {
+    lastInteraction = Date.now();
+    currentLonelyStage = -1;
+    origOnMultiTap(c);
+};
+
+// ═══ 时段感知系统 ═══
+// 根据时间自动调整行为
+function getTimeGreeting() {
+    const h = new Date().getHours();
+    if (h >= 0 && h < 7) return { mood: 'sleepy', line: '都几点了还不睡。' };
+    if (h >= 7 && h < 9) return { mood: 'coffee', line: '早。喝水。' };
+    if (h >= 12 && h < 13) return { mood: 'eating', line: '该吃饭了。' };
+    if (h >= 18 && h < 19) return { mood: 'eating', line: '吃晚饭了吗。' };
+    if (h >= 23) return { mood: 'sleepy', line: '该睡了。' };
+    return null;
+}
+
+// Time-based reminder every 30 minutes
+setInterval(() => {
+    if (currentMood !== 'idle') return; // don't interrupt other states
+    const greeting = getTimeGreeting();
+    if (greeting && Math.random() < 0.4) {
+        setMood(greeting.mood);
+        showBubble(greeting.line, 4000);
+        setTimeout(() => setMood('idle'), 6000);
+    }
+}, 1800000); // every 30 min
 </script>
 </body>
 </html>
