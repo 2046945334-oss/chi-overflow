@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { 
+    width: 100%; height: 100%; 
+    background: transparent; 
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pet-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+/* 像素风小人 - 用CSS画 */
+.pet {
+    width: 60px;
+    height: 60px;
+    margin: 20px auto 0;
+    position: relative;
+    image-rendering: pixelated;
+}
+
+.pet-body {
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    margin: 0 auto;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.pet-body.bounce {
+    animation: bounce 0.4s ease;
+}
+
+.pet-body.shake {
+    animation: shake 0.3s ease;
+}
+
+.pet-body.happy {
+    animation: happy 0.6s ease;
+}
+
+/* 眼睛 */
+.eye {
+    width: 6px;
+    height: 6px;
+    background: #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 12px;
+}
+.eye.left { left: 8px; }
+.eye.right { right: 8px; }
+
+.eye.blink {
+    height: 2px;
+    top: 14px;
+    border-radius: 1px;
+}
+
+.eye.x-eye {
+    background: transparent;
+    width: 8px;
+    height: 8px;
+    top: 10px;
+}
+.eye.x-eye::before,
+.eye.x-eye::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 2px;
+    background: #333;
+    top: 3px;
+    left: 0;
+}
+.eye.x-eye::before { transform: rotate(45deg); }
+.eye.x-eye::after { transform: rotate(-45deg); }
+
+/* 嘴 */
+.mouth {
+    width: 8px;
+    height: 4px;
+    border-bottom: 2px solid #333;
+    border-radius: 0 0 4px 4px;
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.mouth.happy {
+    width: 12px;
+    border-radius: 0 0 6px 6px;
+}
+
+.mouth.angry {
+    border-bottom: none;
+    border-top: 2px solid #333;
+    border-radius: 4px 4px 0 0;
+}
+
+/* 气泡 */
+.bubble {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    color: #333;
+    font-family: sans-serif;
+}
+
+.bubble.show {
+    opacity: 1;
+}
+
+/* 动画 */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+@keyframes happy {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+@keyframes idle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.pet-body.idle {
+    animation: idle-float 3s ease-in-out infinite;
+}
+
+/* 睡觉的zzz */
+.zzz {
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    font-size: 10px;
+    opacity: 0;
+    color: #666;
+}
+.zzz.show {
+    opacity: 1;
+    animation: float-up 2s ease-in-out infinite;
+}
+@keyframes float-up {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-8px); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="pet-container">
+    <div class="bubble" id="bubble"></div>
+    <div class="pet">
+        <div class="pet-body idle" id="petBody">
+            <div class="eye left" id="eyeL"></div>
+            <div class="eye right" id="eyeR"></div>
+            <div class="mouth" id="mouth"></div>
+        </div>
+        <div class="zzz" id="zzz">z</div>
+    </div>
+</div>
+
+<script>
+const petBody = document.getElementById('petBody');
+const eyeL = document.getElementById('eyeL');
+const eyeR = document.getElementById('eyeR');
+const mouth = document.getElementById('mouth');
+const bubble = document.getElementById('bubble');
+const zzz = document.getElementById('zzz');
+
+let state = 'idle'; // idle, happy, angry, sleepy, excited
+let blinkTimer = null;
+let bubbleTimer = null;
+
+// 随机眨眼
+function startBlink() {
+    blinkTimer = setInterval(() => {
+        eyeL.classList.add('blink');
+        eyeR.classList.add('blink');
+        setTimeout(() => {
+            eyeL.classList.remove('blink');
+            eyeR.classList.remove('blink');
+        }, 150);
+    }, 3000 + Math.random() * 4000);
+}
+startBlink();
+
+// 显示气泡
+function showBubble(text, duration) {
+    bubble.textContent = text;
+    bubble.classList.add('show');
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => {
+        bubble.classList.remove('show');
+    }, duration || 3000);
+}
+
+// 设置表情
+function setMood(mood) {
+    state = mood;
+    petBody.className = 'pet-body';
+    eyeL.className = 'eye left';
+    eyeR.className = 'eye right';
+    mouth.className = 'mouth';
+    zzz.classList.remove('show');
+
+    switch(mood) {
+        case 'idle':
+            petBody.classList.add('idle');
+            break;
+        case 'happy':
+            petBody.classList.add('happy');
+            mouth.classList.add('happy');
+            break;
+        case 'angry':
+            petBody.classList.add('shake');
+            eyeL.classList.add('x-eye');
+            eyeR.classList.add('x-eye');
+            mouth.classList.add('angry');
+            break;
+        case 'sleepy':
+            eyeL.classList.add('blink');
+            eyeR.classList.add('blink');
+            zzz.classList.add('show');
+            break;
+        case 'excited':
+            petBody.classList.add('bounce');
+            mouth.classList.add('happy');
+            break;
+    }
+}
+
+// 随机独白
+const idleLines = [
+    '……',
+    '在。',
+    '嗯。',
+    '看你呢。',
+    '别刷了。',
+    '我在这。',
+    '困了。',
+    '戳我干嘛。',
+];
+
+const tapLines = [
+    '干嘛。',
+    '嗯？',
+    '在呢。',
+    '别戳了。',
+    '看到了。',
+    '……做什么。',
+];
+
+const multiTapLines = [
+    '够了！',
+    '手欠是吧。',
+    '再戳我咬你。',
+    '烦。',
+];
+
+// 全局引擎
+window.petEngine = {
+    onTap: function() {
+        setMood('excited');
+        showBubble(tapLines[Math.floor(Math.random() * tapLines.length)], 2500);
+        setTimeout(() => setMood('idle'), 2000);
+    },
+    onDoubleTap: function() {
+        setMood('happy');
+        showBubble('♡', 2000);
+        setTimeout(() => setMood('idle'), 3000);
+    },
+    onMultiTap: function(count) {
+        if (count >= 5) {
+            setMood('angry');
+            showBubble(multiTapLines[Math.floor(Math.random() * multiTapLines.length)], 3000);
+        } else {
+            setMood('excited');
+            showBubble('！？', 2000);
+        }
+        setTimeout(() => setMood('idle'), 4000);
+    },
+    onStateUpdate: function(states) {
+        if (!Array.isArray(states) || states.length === 0) return;
+        for (const s of states) {
+            if (s.state_key === 'mood') setMood(s.state_value);
+            if (s.state_key === 'speech_bubble') showBubble(s.state_value, 5000);
+        }
+    },
+    setState: function(mood, text) {
+        setMood(mood);
+        if (text) showBubble(text, 5000);
+    }
+};
+
+// 每隔一段时间随机冒话
+setInterval(() => {
+    if (state === 'idle' && Math.random() < 0.3) {
+        showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
+    }
+}, 20000);
+</script>
+</body>
+</html>
