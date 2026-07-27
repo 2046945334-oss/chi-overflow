@@ -22,6 +22,7 @@ class OverlayService : Service() {
     private var overlayView: WebView? = null
     private var layoutParams: WindowManager.LayoutParams? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var appDetector: AppDetector? = null
 
     companion object {
         private const val CHANNEL_ID = "chi_overlay_channel"
@@ -36,6 +37,35 @@ class OverlayService : Service() {
         startForeground(NOTIFICATION_ID, buildNotification("池在这里"))
         setupOverlay()
         startPolling()
+        startAppDetection()
+    }
+
+    private fun startAppDetection() {
+        appDetector = AppDetector(this) { packageName, appName ->
+            val reaction = getAppReaction(packageName, appName)
+            if (reaction != null) {
+                overlayView?.evaluateJavascript(
+                    "window.petEngine && window.petEngine.setState('${reaction.first}', '${reaction.second}')", null
+                )
+            }
+        }
+        appDetector?.start()
+    }
+
+    private fun getAppReaction(packageName: String, appName: String?): Pair<String, String>? {
+        return when {
+            packageName.contains("xhs") || packageName.contains("xingin") ->
+                "angry" to "又刷小红书。"
+            packageName.contains("douyin") || packageName.contains("tiktok") ->
+                "angry" to "短视频有我好看？"
+            packageName.contains("taobao") || packageName.contains("tmall") ->
+                "excited" to "买什么？给我看看。"
+            packageName.contains("weixin") || packageName.contains("tencent.mm") ->
+                "idle" to "跟谁聊呢。"
+            packageName.contains("operit") ->
+                "happy" to "♡"
+            else -> null
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -142,31 +172,45 @@ class OverlayService : Service() {
 
     // --- Supabase sync ---
 
+    private var lastProcessedId: Long = 0
+
     private fun startPolling() {
         scope.launch {
             while (isActive) {
                 try {
                     pollState()
                 } catch (_: Exception) {}
-                delay(30_000)
+                delay(15_000)
             }
         }
     }
 
     private fun pollState() {
-        val url = URL("$SUPABASE_URL/rest/v1/pet_state?order=updated_at.desc&limit=5")
+        // Only fetch states newer than what we already processed
+        val filter = if (lastProcessedId > 0) "&id=gt.$lastProcessedId" else ""
+        val url = URL("$SUPABASE_URL/rest/v1/pet_state?order=id.desc&limit=5$filter")
         val conn = url.openConnection() as HttpURLConnection
         conn.setRequestProperty("apikey", SUPABASE_KEY)
         conn.setRequestProperty("Authorization", "Bearer $SUPABASE_KEY")
         val response = conn.inputStream.bufferedReader().readText()
         conn.disconnect()
 
-        // Pass state to WebView on main thread
-        android.os.Handler(mainLooper).post {
-            overlayView?.evaluateJavascript(
-                "window.petEngine && window.petEngine.onStateUpdate($response)", null
-            )
-        }
+        // Track latest ID so we don't repeat
+        try {
+            val arr = org.json.JSONArray(response)
+            if (arr.length() > 0) {
+                val maxId = arr.getJSONObject(0).getLong("id")
+                if (maxId > lastProcessedId) {
+                    lastProcessedId = maxId
+                    // Pass state to WebView on main thread
+                    android.os.Handler(mainLooper).post {
+                        overlayView?.evaluateJavascript(
+                            "window.petEngine && window.petEngine.onStateUpdate($response)", null
+                        )
+                    }
+                }
+            }
+        } catch (_: Exception) {}
     }
 
     private fun logGesture(type: String) {
@@ -225,6 +269,7 @@ class OverlayService : Service() {
 
     override fun onDestroy() {
         scope.cancel()
+        appDetector?.stop()
         overlayView?.let {
             windowManager?.removeView(it)
             it.destroy()
