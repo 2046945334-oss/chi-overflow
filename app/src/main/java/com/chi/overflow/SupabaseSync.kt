@@ -34,14 +34,14 @@ class SupabaseSync {
             put("state_key", key)
             put("state_value", value)
         }
-        post("pet_state", body)
+        post("pet_states", body)
     }
 
     // Poll latest state (for WebView to call)
     fun pollState(callback: (JSONArray) -> Unit) {
         scope.launch {
             try {
-                val url = URL("${Config.SUPABASE_URL}/rest/v1/pet_state?order=updated_at.desc&limit=5")
+                val url = URL("${Config.SUPABASE_URL}/rest/v1/pet_states?order=updated_at.desc&limit=5")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "GET"
                 conn.setRequestProperty("apikey", Config.SUPABASE_KEY)
