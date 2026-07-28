@@ -29,8 +29,8 @@ class OverlayService : Service() {
     companion object {
         private const val CHANNEL_ID = "chi_overlay_channel"
         private const val NOTIFICATION_ID = 1
-        private const val SUPABASE_URL = "https://stdazvhmhlegywebkbzdt.supabase.co"
-private const val SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0ZGF6dmhtaGxlZ3l3ZWJrYnpkdCIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzUzNTI0NjI4LCJleHAiOjIwNjkxMDA2Mjh9.9P8FjczKFHFn26jbyDljIFi7Z5vy5dR4MbE9OaQWPMQ"
+        private const val SUPABASE_URL = "https://stdazvhmhlegyweisxap.supabase.co"
+        private const val SUPABASE_KEY = "sb_publishable_yfl3O8yJ2ppOlxEougEMUA_GytwkD6U"
     }
 
     override fun onCreate() {
@@ -242,7 +242,7 @@ private const val SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
     private fun pollState() {
         // Only fetch states newer than what we already processed
         val filter = if (lastProcessedId > 0) "&id=gt.$lastProcessedId" else ""
-        val url = URL("$SUPABASE_URL/rest/v1/pet_states?order=id.desc&limit=5$filter")
+        val url = URL("$SUPABASE_URL/rest/v1/pet_state?order=id.desc&limit=5$filter")
         val conn = url.openConnection() as HttpURLConnection
         conn.setRequestProperty("apikey", SUPABASE_KEY)
         conn.setRequestProperty("Authorization", "Bearer $SUPABASE_KEY")
