@@ -454,6 +454,552 @@ html, body {
       </g>
     </g>
     </svg></div>
+        <div class="svg-state" id="svg-guitar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .gm-body{transform-origin:7.5px 13px;animation:gm-lean 2.4s infinite ease-in-out;}
+      .gm-shad{transform-origin:7.5px 15.5px;animation:gm-shadow 2.4s infinite ease-in-out;}
+      .gm-eye {transform-origin:7.5px 9px;animation:gm-blink 2.8s infinite;}
+      .gm-al  {transform-origin:2px 10px;animation:gm-hold-l 2.4s infinite ease-in-out;}
+      .gm-ar  {transform-origin:13px 10px;animation:gm-hold-r 2.4s infinite ease-in-out;}
+      .gm-ba  {transform-origin:center;animation:gm-press .36s infinite alternate ease-in-out;}
+      .gm-bb  {transform-origin:center;animation:gm-press .36s -.18s infinite alternate ease-in-out;}
+      .gm-glow{animation:gm-glow .5s infinite alternate ease-in-out;}
+      .gm-scr {animation:gm-flick 2.4s infinite ease-in-out;}
+      .gm-spr {animation:gm-spr .8s infinite ease-in-out;}
+      .gm-enm {animation:gm-enm 1.1s infinite ease-in-out;}
+      @keyframes gm-flick{0%,100%{opacity:.96;}50%{opacity:1;}}
+      @keyframes gm-spr{0%,100%{transform:translateY(0);}50%{transform:translateY(-1.4px);}}
+      @keyframes gm-enm{0%,100%{transform:translateX(0);}50%{transform:translateX(-2px);}}
+      @keyframes gm-lean{0%,58%,100%{transform:translateY(0) rotate(0);}74%{transform:translateY(-2px) rotate(-2deg);}84%{transform:translateY(0) rotate(0);}}
+      @keyframes gm-shadow{0%,100%{transform:scaleX(1);opacity:.5;}74%{transform:scaleX(.9);opacity:.42;}}
+      @keyframes gm-blink{0%,45%,55%,100%{transform:scaleY(.82);}50%{transform:scaleY(.1);}}
+      @keyframes gm-hold-l{0%,100%{transform:rotate(46deg);}74%{transform:rotate(40deg);}}
+      @keyframes gm-hold-r{0%,100%{transform:rotate(-46deg);}74%{transform:rotate(-40deg);}}
+      @keyframes gm-press{0%{transform:translateY(-.3px);}100%{transform:translateY(.5px);}}
+      @keyframes gm-glow{0%{opacity:.1;}100%{opacity:.26;}}
+    </style></defs>
+
+    <!-- monitor / game screen (faced by crab) -->
+    <g class="gm-scr">
+      <rect x="-1" y="-12.5" width="18" height="11.4" rx="1.2" fill="#16161d"/>
+      <rect x=".4" y="-11.1" width="15.2" height="8.5" rx=".6" fill="#0b1626"/>
+      <rect x=".4" y="-4.9" width="15.2" height="2.3" fill="#15401b"/>
+      <rect class="gm-spr" x="2.4" y="-6.9" width="1.9" height="2" fill="#4ad6ff"/>
+      <rect class="gm-enm" x="10" y="-5" width="1.7" height="2.4" fill="#ff5a5a"/>
+      <rect x="12.8" y="-9.8" width="1.1" height="1.1" rx=".55" fill="#ffd14a"/>
+      <rect x="5.2" y="-10" width=".9" height=".9" fill="#fff" opacity=".6"/>
+      <rect x="7" y="-1.2" width="2.6" height="2" fill="#16161d"/>
+      <rect x="3.8" y=".8" width="9" height="1.4" rx=".6" fill="#16161d"/>
+    </g>
+
+    <rect class="gm-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="gm-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <!-- screen glow on face -->
+      <rect class="gm-glow" x="2" y="6" width="11" height="5" fill="#4ad6ff" rx="1"/>
+      <g class="gm-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="gm-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="gm-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- controller (foreground, held in front) -->
+      <g>
+        <rect x="2.6" y="10.4" width="9.8" height="2.8" rx="1.3" fill="#2b2b34"/>
+        <rect x="2.6" y="10.4" width="9.8" height=".9" rx="1.3" fill="#3a3a46"/>
+        <!-- d-pad -->
+        <rect x="4" y="11.4" width="1.8" height=".7" fill="#555"/>
+        <rect x="4.55" y="10.85" width=".7" height="1.8" fill="#555"/>
+        <!-- buttons -->
+        <circle class="gm-ba" cx="9.4" cy="11.3" r=".7" fill="#ff5555"/>
+        <circle class="gm-bb" cx="10.8" cy="12" r=".7" fill="#ffd14a"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-exercise"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .ex-body{transform-origin:7.5px 13px;animation:ex-squat 1s infinite ease-in-out;}
+      .ex-shad{transform-origin:7.5px 15.5px;animation:ex-shadow 1s infinite ease-in-out;}
+      .ex-eye {transform-origin:7.5px 9px;animation:ex-eye 1s infinite ease-in-out;}
+      .ex-al  {transform-origin:2px 10px;animation:ex-curl-l 1s infinite ease-in-out;}
+      .ex-ar  {transform-origin:13px 10px;animation:ex-curl-r 1s infinite ease-in-out;}
+      .ex-sweat{opacity:0;animation:ex-sweat 1s var(--sd,0s) infinite ease-out;}
+      @keyframes ex-squat{0%,100%{transform:translateY(0) scaleY(1);}50%{transform:translateY(1px) scaleY(.93);}}
+      @keyframes ex-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(1.06);opacity:.55;}}
+      @keyframes ex-eye{0%,100%{transform:scaleY(.7);}50%{transform:scaleY(.5);}}
+      @keyframes ex-curl-l{0%,100%{transform:rotate(12deg);}50%{transform:rotate(74deg);}}
+      @keyframes ex-curl-r{0%,100%{transform:rotate(-12deg);}50%{transform:rotate(-74deg);}}
+      @keyframes ex-sweat{0%{opacity:0;transform:translate(0,0);}20%{opacity:1;}100%{opacity:0;transform:translate(var(--tx,3px),6px);}}
+    </style></defs>
+
+    <!-- sweat drops -->
+    <g fill="#7ec8ff">
+      <g class="ex-sweat" style="--sd:0s;--tx:4px"><rect x="13" y="4" width="1.2" height="1.6" rx=".6"/></g>
+      <g class="ex-sweat" style="--sd:-.5s;--tx:-4px"><rect x="0" y="5" width="1.2" height="1.6" rx=".6"/></g>
+    </g>
+
+    <rect class="ex-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="ex-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <!-- sweatband -->
+      <rect x="2" y="6.3" width="11" height="1.3" fill="#ff5555"/>
+      <rect x="2" y="6.3" width="11" height=".5" fill="#ff8888"/>
+      <!-- left arm + dumbbell -->
+      <g class="ex-al">
+        <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+        <rect x="-1.6" y="9.6" width="5.2" height=".9" fill="#222"/>
+        <rect x="-1.8" y="8.9" width="1" height="2.3" rx=".2" fill="#3a3a3a"/>
+        <rect x="2.8" y="8.9" width="1" height="2.3" rx=".2" fill="#3a3a3a"/>
+      </g>
+      <!-- right arm + dumbbell -->
+      <g class="ex-ar">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+        <rect x="11.4" y="9.6" width="5.2" height=".9" fill="#222"/>
+        <rect x="11.2" y="8.9" width="1" height="2.3" rx=".2" fill="#3a3a3a"/>
+        <rect x="15.8" y="8.9" width="1" height="2.3" rx=".2" fill="#3a3a3a"/>
+      </g>
+      <g class="ex-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-painting"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .pt-body{transform-origin:7.5px 13px;animation:pt-bob 2.6s infinite ease-in-out;}
+      .pt-shad{transform-origin:7.5px 15.5px;animation:pt-shadow 2.6s infinite ease-in-out;}
+      .pt-eye {transform-origin:7.5px 9px;animation:pt-blink 3.2s infinite;}
+      .pt-brush{transform-origin:13px 10px;animation:pt-dab 1s infinite alternate ease-in-out;}
+      .pt-spark{opacity:0;animation:pt-spark 2s var(--sd,0s) infinite ease-out;}
+      @keyframes pt-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-.4px);}}
+      @keyframes pt-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.97);opacity:.46;}}
+      @keyframes pt-blink{0%,47%,53%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes pt-dab{0%{transform:rotate(-32deg);}100%{transform:rotate(-6deg);}}
+      @keyframes pt-spark{0%{opacity:0;transform:translateY(0) scale(.4);}30%{opacity:1;}100%{opacity:0;transform:translateY(-6px) scale(1);}}
+    </style></defs>
+
+    <rect class="pt-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="pt-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="pt-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- left arm holds palette -->
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <g>
+        <ellipse cx="-1.6" cy="11.6" rx="3.5" ry="2.4" fill="#caa46e"/>
+        <ellipse cx="-1.4" cy="12" rx="1" ry=".8" fill="#1a1208"/>
+        <circle cx="-3.4" cy="10.8" r=".7" fill="#ff5a5a"/><circle cx="-1.8" cy="9.9" r=".7" fill="#4ad6ff"/>
+        <circle cx="-.1" cy="10.4" r=".7" fill="#ffd14a"/><circle cx="-3.2" cy="12.4" r=".7" fill="#5ad17a"/>
+      </g>
+      <!-- right arm with brush -->
+      <g class="pt-brush">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+        <rect x="10.1" y="3" width=".8" height="7" rx=".3" fill="#a9743a" transform="rotate(30,10.5,6.5)"/>
+        <polygon points="8.6,3.6 10.4,2.2 11,3.4 9.4,4.6" fill="#ff5a5a"/>
+      </g>
+      <!-- paint sparkles -->
+      <g>
+        <rect class="pt-spark" style="--sd:0s"    x="7.6" y="1.6" width="1" height="1" rx=".2" fill="#4ad6ff"/>
+        <rect class="pt-spark" style="--sd:-.9s"  x="11"  y="2.4" width="1" height="1" rx=".2" fill="#ffd14a"/>
+        <rect class="pt-spark" style="--sd:-1.4s" x="9.4" y="0.6" width="1" height="1" rx=".2" fill="#ff5a5a"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .ph-body{transform-origin:7.5px 13px;animation:ph-bob 3s infinite ease-in-out;}
+      .ph-shad{transform-origin:7.5px 15.5px;animation:ph-shadow 3s infinite ease-in-out;}
+      .ph-flash{animation:ph-flash 2.4s infinite;}
+      .ph-burst{opacity:0;transform-origin:center;animation:ph-burst 2.4s infinite;}
+      @keyframes ph-bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-.4px);}}
+      @keyframes ph-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.97);opacity:.46;}}
+      @keyframes ph-flash{0%,92%,100%{fill:#7a7d86;}95%{fill:#fffbe0;}}
+      @keyframes ph-burst{0%,90%,100%{opacity:0;transform:scale(.3);}94%{opacity:.85;transform:scale(1);}}
+    </style></defs>
+
+    <rect class="ph-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="ph-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <!-- little smile below camera -->
+      <rect x="6.2" y="11.4" width="2.6" height=".8" rx=".4" fill="#7a2230"/>
+      <!-- arms gripping camera -->
+      <rect x="0.6" y="8.8" width="2.4" height="2" rx=".3" fill="#DE886D" transform="rotate(34,1.8,9.8)"/>
+      <rect x="12" y="8.8" width="2.4" height="2" rx=".3" fill="#DE886D" transform="rotate(-34,13.2,9.8)"/>
+      <!-- camera (covers upper face) -->
+      <g>
+        <rect x="8.4" y="5.6" width="2.4" height="1.6" rx=".3" fill="#3a3a44"/>
+        <rect x="2.6" y="6.6" width="9" height="4.6" rx=".7" fill="#2b2b34"/>
+        <rect x="2.6" y="6.6" width="9" height="1" rx=".7" fill="#3a3a46"/>
+        <circle cx="7" cy="9" r="2" fill="#1a1a20"/>
+        <circle cx="7" cy="9" r="1.3" fill="#46566b"/>
+        <circle cx="6.5" cy="8.5" r=".5" fill="#a9c4e0"/>
+        <rect class="ph-flash" x="3.2" y="7" width="1.6" height="1.1" rx=".25"/>
+      </g>
+      <!-- flash burst -->
+      <g class="ph-burst" fill="#fffbe0">
+        <polygon points="0.4,4 1.1,5.6 0.4,7.2 -0.3,5.6"/>
+        <polygon points="-1.4,5.6 0.2,4.9 1.8,5.6 0.2,6.3"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-shower"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .sh-body{transform-origin:7.5px 13px;animation:sh-sway 2.2s infinite ease-in-out;}
+      .sh-shad{transform-origin:7.5px 15.5px;animation:sh-shadow 2.2s infinite ease-in-out;}
+      .sh-eye {transform-origin:7.5px 9px;animation:sh-blink 3s infinite;}
+      .sh-arm {transform-origin:13px 10px;animation:sh-scrub .5s infinite alternate ease-in-out;}
+      .sh-water{opacity:0;animation:sh-water 1.1s var(--sd,0s) infinite linear;}
+      .sh-bubble{opacity:0;animation:sh-bubble var(--d,2.4s) var(--sd,0s) infinite ease-out;}
+      @keyframes sh-sway{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(2deg);}}
+      @keyframes sh-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.95);opacity:.45;}}
+      @keyframes sh-blink{0%,45%,55%,100%{transform:scaleY(.7);}50%{transform:scaleY(.1);}}
+      @keyframes sh-scrub{0%{transform:rotate(-26deg) translateX(0);}100%{transform:rotate(-50deg) translateX(-.6px);}}
+      @keyframes sh-water{0%{opacity:0;transform:translateY(-2px);}15%{opacity:.85;}100%{opacity:0;transform:translateY(18px);}}
+      @keyframes sh-bubble{0%{opacity:0;transform:translate(0,0) scale(.4);}25%{opacity:.7;}100%{opacity:0;transform:translate(var(--tx,3px),-15px) scale(1.1);}}
+    </style></defs>
+
+    <!-- shower head -->
+    <g>
+      <rect x="6.5" y="-23" width="2" height="3" fill="#8a98a0"/>
+      <path d="M2 -20 H13 L11.5 -18 H3.5 Z" fill="#aab6bd"/>
+      <rect x="3.5" y="-18.4" width="8" height=".6" fill="#87949b"/>
+    </g>
+    <!-- water -->
+    <g fill="#7ec8ff">
+      <rect class="sh-water" style="--sd:0s"   x="3.5" y="-17" width=".8" height="2.4" rx=".4"/>
+      <rect class="sh-water" style="--sd:-.3s" x="6"   y="-17" width=".8" height="2.4" rx=".4"/>
+      <rect class="sh-water" style="--sd:-.6s" x="8.5" y="-17" width=".8" height="2.4" rx=".4"/>
+      <rect class="sh-water" style="--sd:-.15s" x="10.8" y="-17" width=".8" height="2.4" rx=".4"/>
+      <rect class="sh-water" style="--sd:-.45s" x="4.8" y="-17" width=".7" height="2" rx=".35"/>
+      <rect class="sh-water" style="--sd:-.75s" x="9.6" y="-17" width=".7" height="2" rx=".35"/>
+    </g>
+    <!-- soap bubbles -->
+    <g fill="#cfeeff">
+      <g class="sh-bubble" style="--d:2.4s;--sd:0s;--tx:4px"><circle cx="13" cy="10" r="1.3" opacity=".6"/><circle cx="12.6" cy="9.6" r=".4" fill="#fff"/></g>
+      <g class="sh-bubble" style="--d:2.8s;--sd:-1s;--tx:-3px"><circle cx="1" cy="11" r="1" opacity=".6"/><circle cx=".7" cy="10.7" r=".3" fill="#fff"/></g>
+      <g class="sh-bubble" style="--d:2.2s;--sd:-1.6s;--tx:2px"><circle cx="14" cy="12" r=".8" opacity=".55"/></g>
+    </g>
+
+    <rect class="sh-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="sh-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="sh-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <g class="sh-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <!-- right arm with sponge -->
+      <g class="sh-arm">
+        <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+        <rect x="10.2" y="8.4" width="2.6" height="2.2" rx=".4" fill="#ffd95e"/>
+        <rect x="10.4" y="8.7" width="2.2" height=".7" fill="#fff" opacity=".5"/>
+      </g>
+      <!-- foam on head -->
+      <g fill="#fff">
+        <circle cx="4" cy="5" r="1.6"/><circle cx="7.5" cy="4.2" r="2"/><circle cx="11" cy="5" r="1.6"/>
+        <circle cx="5.8" cy="5.2" r="1.4"/><circle cx="9.2" cy="5.2" r="1.4"/>
+      </g>
+    </g>
+    <!-- rubber duck (foreground) -->
+    <g transform="translate(9.5,13.6)">
+      <ellipse cx="1.6" cy="1.6" rx="2" ry="1.4" fill="#FFD22E"/>
+      <circle cx="3.2" cy=".3" r="1.1" fill="#FFD22E"/>
+      <rect x="3.9" y=".1" width="1.4" height=".8" rx=".3" fill="#FF9000"/>
+      <circle cx="3.4" cy="0" r=".25" fill="#000"/>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-singing"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .sg-body{transform-origin:7.5px 13px;animation:sg-sway 1.4s infinite ease-in-out;}
+      .sg-shad{transform-origin:7.5px 15.5px;animation:sg-shadow 1.4s infinite ease-in-out;}
+      .sg-eye {transform-origin:7.5px 9px;animation:sg-blink 2.8s infinite;}
+      .sg-mouth{transform-origin:7.5px 11.5px;animation:sg-sing .5s infinite alternate ease-in-out;}
+      .sg-al  {transform-origin:2px 10px;animation:sg-wave 1.4s infinite ease-in-out;}
+      .sg-mic {transform-origin:11.5px 12px;animation:sg-michold 1.4s infinite ease-in-out;}
+      .sg-note{opacity:0;animation:sg-note var(--d,2s) var(--delay,0s) infinite ease-out;}
+      @keyframes sg-sway{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+      @keyframes sg-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.92);opacity:.42;}}
+      @keyframes sg-blink{0%,44%,56%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes sg-sing{0%{transform:scaleY(.45) scaleX(.9);}100%{transform:scaleY(1.15) scaleX(1.05);}}
+      @keyframes sg-wave{0%,100%{transform:rotate(42deg);}50%{transform:rotate(78deg) translateY(-1px);}}
+      @keyframes sg-michold{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+      @keyframes sg-note{0%{opacity:0;transform:translate(0,0) rotate(0);}15%{opacity:1;}80%{opacity:.85;}100%{opacity:0;transform:translate(var(--tx,-5px),-18px) rotate(var(--r,-18deg));}}
+    </style></defs>
+
+    <!-- notes -->
+    <g>
+      <g class="sg-note" style="--delay:0s;--d:2s;--tx:-6px;--r:-25deg" transform="translate(0,-1)" fill="#ff7ab3"><ellipse cx="0" cy="2" rx="1.1" ry=".85"/><rect x="1" y="-2" width=".7" height="4"/><rect x="1" y="-2" width="2.2" height=".8"/></g>
+      <g class="sg-note" style="--delay:-.8s;--d:2.3s;--tx:-4px;--r:18deg" transform="translate(11,-2)" fill="#ff9ec8"><ellipse cx="0" cy="1.6" rx=".9" ry=".7"/><rect x=".8" y="-1.8" width=".6" height="3.6"/></g>
+      <g class="sg-note" style="--delay:-1.4s;--d:2.1s;--tx:-7px;--r:-12deg" transform="translate(5,-3)" fill="#ff5aa0"><ellipse cx="0" cy="1.6" rx="1" ry=".75"/><rect x=".9" y="-1.8" width=".6" height="3.6"/><rect x=".9" y="-1.8" width="1.8" height=".7"/></g>
+    </g>
+
+    <rect class="sg-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="sg-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="sg-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <!-- right forearm bent down to grip the mic -->
+      <rect x="11" y="9" width="2" height="3.6" fill="#DE886D" rx=".5"/>
+      <g class="sg-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- open singing mouth -->
+      <ellipse class="sg-mouth" cx="7" cy="11.2" rx="1.3" ry="1.2" fill="#7a2230"/>
+      <!-- microphone: handle connects the hand to the ball at the mouth -->
+      <g class="sg-mic">
+        <rect x="8.8" y="11.1" width="3.6" height="1" rx=".5" fill="#3a3a42" transform="rotate(24,11.5,12)"/>
+        <circle cx="8.7" cy="11" r="1.5" fill="#9a9aa2"/>
+        <circle cx="8.4" cy="10.6" r=".5" fill="#d6d6de"/>
+        <rect x="7.6" y="10.5" width="2.2" height=".35" fill="#555" transform="rotate(24,8.7,11)"/>
+        <rect x="7.6" y="11.2" width="2.2" height=".35" fill="#555" transform="rotate(24,8.7,11)"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-birthday"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .bd-all {transform-origin:7.5px 15px;animation:bd-hop 1.1s infinite ease-in-out;}
+      .bd-shad{transform-origin:7.5px 15.5px;animation:bd-shadow 1.1s infinite ease-in-out;}
+      .bd-eye {transform-origin:7.5px 9px;animation:bd-blink 2.2s infinite;}
+      .bd-al  {transform-origin:2px 10px;animation:bd-arm-l .55s infinite alternate ease-in-out;}
+      .bd-ar  {transform-origin:14px 10px;animation:bd-arm-r .55s infinite alternate ease-in-out;}
+      .bd-hat {transform-origin:7.5px 6px;animation:bd-hatwob 1.1s infinite ease-in-out;}
+      .bd-flame{transform-origin:7.5px 9.5px;animation:bd-flame .22s infinite alternate ease-in-out;}
+      .bd-cf  {opacity:0;animation:bd-confetti var(--d,1.3s) var(--delay,0s) infinite ease-in;}
+      @keyframes bd-hop{
+        0%,18%,100%{transform:translateY(0) scaleY(1) scaleX(1);}
+        24%{transform:translateY(.4px) scaleY(.86) scaleX(1.1);}
+        46%{transform:translateY(-6px) scaleY(1.05) scaleX(.97);}
+        52%{transform:translateY(-7px) scaleY(1) scaleX(1);}
+        58%{transform:translateY(-6px) scaleY(1.05) scaleX(.97);}
+        82%{transform:translateY(.4px) scaleY(.86) scaleX(1.1);}
+        90%{transform:translateY(0) scaleY(1.03) scaleX(.99);}
+      }
+      @keyframes bd-shadow{
+        0%,18%,100%{transform:scaleX(1);opacity:.5;}
+        46%,58%{transform:scaleX(.55);opacity:.18;}
+        82%{transform:scaleX(1.12);opacity:.6;}
+      }
+      @keyframes bd-blink{0%,44%,56%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes bd-arm-l{0%{transform:rotate(35deg);}100%{transform:rotate(75deg);}}
+      @keyframes bd-arm-r{0%{transform:rotate(-35deg);}100%{transform:rotate(-75deg);}}
+      @keyframes bd-hatwob{
+        0%,18%,100%{transform:rotate(0deg);}
+        52%{transform:rotate(-7deg);}
+        82%{transform:rotate(5deg);}
+      }
+      @keyframes bd-flame{0%{transform:scaleX(1) scaleY(1);}100%{transform:scaleX(.65) scaleY(1.25) translateX(.1px);}}
+      @keyframes bd-confetti{
+        0%{opacity:0;transform:translate(0,0) rotate(0deg);}
+        12%{opacity:1;}
+        85%{opacity:.8;}
+        100%{opacity:0;transform:translate(var(--tx,3px),22px) rotate(var(--r,200deg));}
+      }
+    </style></defs>
+
+    <!-- confetti behind -->
+    <g>
+      <rect class="bd-cf" style="--delay:0s;--d:1.4s;--tx:-6px;--r:220deg"  x="-6" y="-20" width="1.6" height="1.6" fill="#FF4444"/>
+      <rect class="bd-cf" style="--delay:-.3s;--d:1.1s;--tx:5px;--r:160deg" x="13" y="-22" width="1.6" height="1"   fill="#FFD700"/>
+      <rect class="bd-cf" style="--delay:-.6s;--d:1.5s;--tx:-3px;--r:280deg"x="3"  y="-23" width="1"   height="1.6" fill="#44AAFF"/>
+      <rect class="bd-cf" style="--delay:-.9s;--d:1.2s;--tx:7px;--r:90deg"  x="19" y="-19" width="1.6" height="1"   fill="#FF69B4"/>
+      <rect class="bd-cf" style="--delay:-.2s;--d:1.6s;--tx:-8px;--r:320deg"x="-9" y="-16" width="1"   height="1.6" fill="#44DD88"/>
+      <rect class="bd-cf" style="--delay:-.7s;--d:1.05s;--tx:4px;--r:180deg"x="9"  y="-24" width="1.6" height="1"   fill="#FF9500"/>
+      <rect class="bd-cf" style="--delay:-.45s;--d:1.35s;--tx:-5px;--r:240deg"x="16" y="-18" width="1"  height="1"   fill="#CC44FF"/>
+      <rect class="bd-cf" style="--delay:-.85s;--d:1.15s;--tx:2px;--r:120deg"x="-3" y="-21" width="1.6" height="1.6" fill="#FFD700"/>
+    </g>
+
+    <rect class="bd-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+
+    <g class="bd-all">
+      <!-- party hat (sits on head, moves with body) -->
+      <g class="bd-hat">
+        <rect x="6.5" y="-1.5" width="2" height="2" fill="#fff"/>
+        <rect x="6"   y=".5" width="3"  height="1" fill="#FF4444"/>
+        <rect x="5"   y="1.5" width="5"  height="1" fill="#FFD700"/>
+        <rect x="4"   y="2.5" width="7"  height="1" fill="#FF4444"/>
+        <rect x="3"   y="3.5"  width="9"  height="1" fill="#FFD700"/>
+        <rect x="2"   y="4.5"  width="11" height="1.2" fill="#FF4444"/>
+        <rect x="2"   y="5.5"  width="11" height=".6" fill="#fff" opacity=".55"/>
+      </g>
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="bd-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="bd-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="bd-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+
+    <!-- cake (foreground, in front of feet) -->
+    <g transform="translate(2.5,13.5)">
+      <rect x="-1" y="3.2" width="11" height=".8" fill="#bbb"/>            <!-- plate -->
+      <rect x="0" y="0" width="9" height="3.4" fill="#F48FB1"/>
+      <rect x="0" y="-.6" width="9" height="1" fill="#fff"/>
+      <rect x="1" y="-.6" width="1" height="1.5" fill="#fff"/>
+      <rect x="4" y="-.6" width="1" height="1.7" fill="#fff"/>
+      <rect x="7" y="-.6" width="1" height="1.4" fill="#fff"/>
+      <rect x="0" y="1.6" width="9" height=".5" fill="#fff" opacity=".4"/>
+      <rect x="4" y="-4" width="1" height="3.4" fill="#FFD700"/>            <!-- candle -->
+      <g class="bd-flame">
+        <rect x="4" y="-6" width="1" height="2" fill="#FF6B00"/>
+        <rect x="4.2" y="-6.5" width=".6" height="1" fill="#FFD700"/>
+      </g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-spring"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .sp-body{transform-origin:7.5px 13px;animation:sp-bow 3.2s infinite ease-in-out;}
+      .sp-shad{transform-origin:7.5px 15.5px;animation:sp-shadow 3.2s infinite ease-in-out;}
+      .sp-eye {transform-origin:7.5px 9px;animation:sp-blink 3.2s infinite;}
+      .sp-al  {transform-origin:2px 10px;animation:sp-arm-l 3.2s infinite ease-in-out;}
+      .sp-ar  {transform-origin:14px 10px;animation:sp-arm-r 3.2s infinite ease-in-out;}
+      .sp-lanl{transform-origin:-8px -22px;animation:sp-lan .9s infinite alternate ease-in-out;}
+      .sp-lanr{transform-origin:23px -22px;animation:sp-lan .9s infinite alternate-reverse ease-in-out;}
+      .sp-fu  {transform-origin:18px -3px;animation:sp-fupulse 2.4s infinite ease-in-out;}
+      .sp-coin{opacity:0;animation:sp-coinfall var(--d,1.5s) var(--delay,0s) infinite ease-in;}
+      @keyframes sp-bow{
+        0%,22%,100%{transform:rotate(0deg) translateY(0);}
+        42%,62%{transform:rotate(-16deg) translate(-1px,1.2px);}
+        80%{transform:rotate(-4deg) translateX(-.4px);}
+      }
+      @keyframes sp-shadow{
+        0%,22%,100%{transform:scaleX(1);opacity:.5;}
+        52%{transform:scaleX(.78) translateX(-1px);opacity:.35;}
+      }
+      @keyframes sp-blink{0%,36%,64%,100%{transform:translate(-.5px,.5px) scaleY(.72);}50%{transform:translate(-.5px,.5px) scaleY(.1);}}
+      @keyframes sp-arm-l{0%,22%,100%{transform:rotate(0deg);}42%,62%{transform:rotate(58deg) translate(1px,-1.2px);}}
+      @keyframes sp-arm-r{0%,22%,100%{transform:rotate(0deg);}42%,62%{transform:rotate(-58deg) translate(-1px,-1.2px);}}
+      @keyframes sp-lan{0%{transform:rotate(-7deg);}100%{transform:rotate(7deg);}}
+      @keyframes sp-fupulse{0%,100%{opacity:.85;transform:scale(1) rotate(0deg);}50%{opacity:1;transform:scale(1.06) rotate(0deg);}}
+      @keyframes sp-coinfall{
+        0%{opacity:0;transform:translate(0,0) rotate(0deg);}
+        14%{opacity:1;}
+        88%{opacity:.8;}
+        100%{opacity:0;transform:translate(var(--tx,2px),20px) rotate(360deg);}
+      }
+    </style></defs>
+
+    <line x1="-8" y1="-25" x2="-8" y2="-22" stroke="#7a0000" stroke-width=".5"/>
+    <line x1="23" y1="-25" x2="23" y2="-22" stroke="#7a0000" stroke-width=".5"/>
+
+    <!-- 灯笼 -->
+    <g class="sp-lanl" transform="translate(-8,-22)">
+      <rect x="-2.2" y="0" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-2.6" y=".6" width="5.2" height="5.4" fill="#CC0000" rx="1.2"/>
+      <rect x="-1.6" y=".8" width="1.6" height="5" fill="#E03030" opacity=".5" rx=".8"/>
+      <rect x="-1.2" y="2" width="2.4" height=".5" fill="#FFC83D"/>
+      <rect x="-.4" y="2.5" width="1" height="1.6" fill="#FFC83D"/>
+      <rect x="-2.2" y="6" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-1.4" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+      <rect x="-.25" y="6.6" width=".5" height="2.8" fill="#FFC83D"/>
+      <rect x="0.9" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+    </g>
+    <g class="sp-lanr" transform="translate(23,-22)">
+      <rect x="-2.2" y="0" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-2.6" y=".6" width="5.2" height="5.4" fill="#CC0000" rx="1.2"/>
+      <rect x="-1.6" y=".8" width="1.6" height="5" fill="#E03030" opacity=".5" rx=".8"/>
+      <rect x="-1.2" y="2" width="2.4" height=".5" fill="#FFC83D"/>
+      <rect x="-.4" y="2.5" width="1" height="1.6" fill="#FFC83D"/>
+      <rect x="-2.2" y="6" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-1.4" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+      <rect x="-.25" y="6.6" width=".5" height="2.8" fill="#FFC83D"/>
+      <rect x="0.9" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+    </g>
+
+    <!-- 福 on red diamond -->
+    <g class="sp-fu" transform="translate(18,-3)">
+      <rect x="-4" y="-4" width="8" height="8" fill="#CC0000" transform="rotate(45)"/>
+      <rect x="-3" y="-3" width="6" height="6" fill="#E81818" transform="rotate(45)" opacity=".6"/>
+      <g fill="#FFD700">
+        <rect x="-2.8" y="-2.6" width="5.6" height=".8"/>
+        <rect x="-.4" y="-1.8" width="1" height="4"/>
+        <rect x="-2.2" y="-1" width="4.8" height=".7"/>
+        <rect x="-2.2" y="-.3" width="1.8" height="1.8"/>
+        <rect x=".6" y="-.3" width="1.8" height="1.8"/>
+        <rect x="-2.2" y="1.5" width="4.8" height=".8"/>
+      </g>
+    </g>
+
+    <!-- gold coins -->
+    <g>
+      <rect class="sp-coin" style="--delay:0s;--d:1.6s;--tx:-3px"  x="-11" y="-15" width="2" height="2" rx="1" fill="#FFD700"/>
+      <rect class="sp-coin" style="--delay:-.5s;--d:1.4s;--tx:2px"  x="-13" y="-10" width="1.6" height="1.6" rx=".8" fill="#FFC107"/>
+      <rect class="sp-coin" style="--delay:-1s;--d:1.7s;--tx:-2px"  x="-9" y="-18" width="1.6" height="1.6" rx=".8" fill="#FFEB3B"/>
+    </g>
+
+    <rect class="sp-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="sp-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="2" y="10" width="11" height="2" fill="#CC0000"/>
+      <rect x="2" y="10" width="11" height=".7" fill="#FF3838"/>
+      <g class="sp-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="sp-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="sp-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg></div>
+        <div class="svg-state" id="svg-valentine"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .vd-body{transform-origin:7.5px 13px;animation:vd-sway 2.8s infinite ease-in-out;}
+      .vd-shad{transform-origin:7.5px 15.5px;animation:vd-shadow 2.8s infinite ease-in-out;}
+      .vd-heart{transform-origin:7.5px 9px;animation:vd-heartbeat .8s infinite ease-in-out;}
+      .vd-blush{animation:vd-blush 2.8s infinite ease-in-out;}
+      .vd-rise{opacity:0;animation:vd-rise var(--d,2.6s) var(--delay,0s) infinite ease-out;}
+      @keyframes vd-sway{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(2deg);}}
+      @keyframes vd-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(1.03);opacity:.45;}}
+      @keyframes vd-heartbeat{0%,100%{transform:scale(1);}25%{transform:scale(1.2);}40%{transform:scale(1);}60%{transform:scale(1.15);}}
+      @keyframes vd-blush{0%,100%{opacity:.6;}50%{opacity:.95;}}
+      @keyframes vd-rise{0%{opacity:0;transform:translate(0,0) scale(.5) rotate(0deg);}15%{opacity:1;transform:scale(1);}80%{opacity:.7;}100%{opacity:0;transform:translate(var(--tx,2px),-22px) scale(1.1) rotate(var(--r,15deg));}}
+    </style></defs>
+
+    <!-- rising hearts -->
+    <g fill="#FF4081">
+      <g class="vd-rise" style="--delay:0s;--d:2.8s;--tx:-3px;--r:-12deg" transform="translate(-8,8)"><rect x="0" y="0" width="1.4" height="1.4"/><rect x="2" y="0" width="1.4" height="1.4"/><rect x="0" y="1" width="3.4" height="1.4"/><rect x=".8" y="2.2" width="1.8" height="1"/><rect x="1.4" y="3" width=".6" height=".8"/></g>
+      <g class="vd-rise" style="--delay:-.9s;--d:2.4s;--tx:4px;--r:18deg" transform="translate(15,9)" fill="#FF6EA5"><rect x="0" y="0" width="1.1" height="1.1"/><rect x="1.6" y="0" width="1.1" height="1.1"/><rect x="0" y=".8" width="2.7" height="1.1"/><rect x=".6" y="1.8" width="1.5" height=".8"/><rect x="1.1" y="2.5" width=".5" height=".6"/></g>
+      <g class="vd-rise" style="--delay:-1.6s;--d:3s;--tx:-2px;--r:-20deg" transform="translate(4,10)" fill="#FF80AB"><rect x="0" y="0" width="1.2" height="1.2"/><rect x="1.7" y="0" width="1.2" height="1.2"/><rect x="0" y=".9" width="2.9" height="1.2"/><rect x=".7" y="2" width="1.5" height=".9"/><rect x="1.2" y="2.8" width=".5" height=".7"/></g>
+      <g class="vd-rise" style="--delay:-2.1s;--d:2.5s;--tx:5px;--r:10deg" transform="translate(20,7)" fill="#FF4081"><rect x="0" y="0" width="1" height="1"/><rect x="1.4" y="0" width="1" height="1"/><rect x="0" y=".7" width="2.4" height="1"/><rect x=".5" y="1.6" width="1.4" height=".7"/><rect x="1" y="2.2" width=".4" height=".5"/></g>
+    </g>
+
+    <rect class="vd-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="vd-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- right arm holds a rose -->
+      <rect x="13" y="8" width="2" height="2" fill="#DE886D"/>
+      <g transform="translate(14,2)">
+        <rect x="0" y="3" width=".6" height="4" fill="#2E7D32"/>
+        <rect x="-1" y="4.5" width="1.2" height=".6" fill="#388E3C" transform="rotate(-30,-.4,4.8)"/>
+        <rect x="-1.5" y="0" width="3.2" height="3" fill="#E91E63" rx=".6"/>
+        <rect x="-.8" y=".6" width="1.6" height="1.6" fill="#FF5C8D" rx=".3"/>
+      </g>
+      <!-- blush cheeks -->
+      <g class="vd-blush" fill="#FF7AA8"><rect x="3" y="10" width="1.6" height="1" rx=".5"/><rect x="10.4" y="10" width="1.6" height="1" rx=".5"/></g>
+      <!-- heart eyes -->
+      <g class="vd-heart" fill="#FF1744">
+        <g transform="translate(3.4,8)"><rect x="0" y="0" width=".8" height=".8"/><rect x="1.2" y="0" width=".8" height=".8"/><rect x="0" y=".6" width="2" height=".9"/><rect x=".5" y="1.4" width="1" height=".7"/></g>
+        <g transform="translate(9.4,8)"><rect x="0" y="0" width=".8" height=".8"/><rect x="1.2" y="0" width=".8" height=".8"/><rect x="0" y=".6" width="2" height=".9"/><rect x=".5" y="1.4" width="1" height=".7"/></g>
+      </g>
+    </g>
+    </svg></div>
     </div>
 </div>
 <script>
@@ -473,7 +1019,16 @@ const moodToId = {
     coffee: 'svg-coffee',
     watering: 'svg-watering',
     coding: 'svg-coding',
-    gaming: 'svg-gaming'
+    gaming: 'svg-gaming',
+    guitar: 'svg-guitar',
+    exercise: 'svg-exercise',
+    painting: 'svg-painting',
+    photo: 'svg-photo',
+    shower: 'svg-shower',
+    singing: 'svg-singing',
+    birthday: 'svg-birthday',
+    spring: 'svg-spring',
+    valentine: 'svg-valentine'
 };
 
 function setMood(mood) {
@@ -537,10 +1092,18 @@ window.petEngine = {
     }
 };
 
-// Random idle chatter
+// Random idle chatter + random emote switch
+const randomMoods = ['guitar', 'exercise', 'painting', 'photo', 'singing', 'spring'];
 setInterval(() => {
-    if (currentMood === 'idle' && Math.random() < 0.25) {
-        showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
+    if (currentMood === 'idle') {
+        if (Math.random() < 0.15) {
+            // Switch to a random fun emote briefly
+            const rm = randomMoods[Math.floor(Math.random() * randomMoods.length)];
+            setMood(rm);
+            setTimeout(() => setMood('idle'), 8000);
+        } else if (Math.random() < 0.3) {
+            showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
+        }
     }
 }, 25000);
 

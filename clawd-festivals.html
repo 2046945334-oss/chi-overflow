@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Clawd 节日图鉴</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0d0d0d;
+    color:#e0e0e0;
+    font-family:'Segoe UI',system-ui,sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 24px 64px;
+    gap:40px;
+  }
+  h1 {
+    font-size:2rem;
+    font-weight:700;
+    background:linear-gradient(135deg,#ff9500,#ff6b6b,#ffcc44);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .subtitle { color:#555; font-size:.85rem; margin-top:6px; }
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:24px;
+    width:100%;
+    max-width:1180px;
+  }
+  .card {
+    background:#111;
+    border:1px solid #1e1e1e;
+    border-radius:18px;
+    overflow:hidden;
+    transition:border-color .2s,transform .2s,box-shadow .2s;
+  }
+  .card:hover {
+    transform:translateY(-4px);
+    box-shadow:0 12px 40px var(--glow,rgba(255,149,0,.12));
+    border-color:var(--bd,rgba(255,149,0,.5));
+  }
+  .card-view {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px 0;
+    min-height:180px;
+    background:var(--bg,#080808);
+    position:relative;
+  }
+  .card-view svg { width:150px; height:150px; }
+  .card-info { padding:16px 18px 18px; border-top:1px solid #1a1a1a; }
+  .card-emoji { font-size:1.1rem; margin-bottom:4px; }
+  .card-name  { font-size:1rem; font-weight:700; }
+  .card-desc  { font-size:.72rem; color:#666; margin-top:5px; line-height:1.6; }
+  .tag {
+    display:inline-block;
+    font-size:.65rem;
+    padding:2px 8px;
+    border-radius:10px;
+    margin-top:8px;
+    font-family:monospace;
+    background:var(--tagbg,rgba(255,149,0,.12));
+    color:var(--tagfg,#ff9500);
+  }
+</style>
+</head>
+<body>
+
+<div style="text-align:center">
+  <h1>Clawd 节日图鉴</h1>
+  <p class="subtitle">10 个节日 · 纯 SVG + CSS keyframes · 像素螃蟹</p>
+</div>
+
+<div class="grid">
+
+<!-- ════════ 1. 生日 BIRTHDAY ════════ -->
+<div class="card" style="--glow:rgba(255,149,0,.2);--bd:rgba(255,149,0,.5);--tagbg:rgba(255,149,0,.12);--tagfg:#ff9500">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .bd-all {transform-origin:7.5px 15px;animation:bd-hop 1.1s infinite ease-in-out;}
+      .bd-shad{transform-origin:7.5px 15.5px;animation:bd-shadow 1.1s infinite ease-in-out;}
+      .bd-eye {transform-origin:7.5px 9px;animation:bd-blink 2.2s infinite;}
+      .bd-al  {transform-origin:2px 10px;animation:bd-arm-l .55s infinite alternate ease-in-out;}
+      .bd-ar  {transform-origin:14px 10px;animation:bd-arm-r .55s infinite alternate ease-in-out;}
+      .bd-hat {transform-origin:7.5px 6px;animation:bd-hatwob 1.1s infinite ease-in-out;}
+      .bd-flame{transform-origin:7.5px 9.5px;animation:bd-flame .22s infinite alternate ease-in-out;}
+      .bd-cf  {opacity:0;animation:bd-confetti var(--d,1.3s) var(--delay,0s) infinite ease-in;}
+      @keyframes bd-hop{
+        0%,18%,100%{transform:translateY(0) scaleY(1) scaleX(1);}
+        24%{transform:translateY(.4px) scaleY(.86) scaleX(1.1);}
+        46%{transform:translateY(-6px) scaleY(1.05) scaleX(.97);}
+        52%{transform:translateY(-7px) scaleY(1) scaleX(1);}
+        58%{transform:translateY(-6px) scaleY(1.05) scaleX(.97);}
+        82%{transform:translateY(.4px) scaleY(.86) scaleX(1.1);}
+        90%{transform:translateY(0) scaleY(1.03) scaleX(.99);}
+      }
+      @keyframes bd-shadow{
+        0%,18%,100%{transform:scaleX(1);opacity:.5;}
+        46%,58%{transform:scaleX(.55);opacity:.18;}
+        82%{transform:scaleX(1.12);opacity:.6;}
+      }
+      @keyframes bd-blink{0%,44%,56%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes bd-arm-l{0%{transform:rotate(35deg);}100%{transform:rotate(75deg);}}
+      @keyframes bd-arm-r{0%{transform:rotate(-35deg);}100%{transform:rotate(-75deg);}}
+      @keyframes bd-hatwob{
+        0%,18%,100%{transform:rotate(0deg);}
+        52%{transform:rotate(-7deg);}
+        82%{transform:rotate(5deg);}
+      }
+      @keyframes bd-flame{0%{transform:scaleX(1) scaleY(1);}100%{transform:scaleX(.65) scaleY(1.25) translateX(.1px);}}
+      @keyframes bd-confetti{
+        0%{opacity:0;transform:translate(0,0) rotate(0deg);}
+        12%{opacity:1;}
+        85%{opacity:.8;}
+        100%{opacity:0;transform:translate(var(--tx,3px),22px) rotate(var(--r,200deg));}
+      }
+    </style></defs>
+
+    <!-- confetti behind -->
+    <g>
+      <rect class="bd-cf" style="--delay:0s;--d:1.4s;--tx:-6px;--r:220deg"  x="-6" y="-20" width="1.6" height="1.6" fill="#FF4444"/>
+      <rect class="bd-cf" style="--delay:-.3s;--d:1.1s;--tx:5px;--r:160deg" x="13" y="-22" width="1.6" height="1"   fill="#FFD700"/>
+      <rect class="bd-cf" style="--delay:-.6s;--d:1.5s;--tx:-3px;--r:280deg"x="3"  y="-23" width="1"   height="1.6" fill="#44AAFF"/>
+      <rect class="bd-cf" style="--delay:-.9s;--d:1.2s;--tx:7px;--r:90deg"  x="19" y="-19" width="1.6" height="1"   fill="#FF69B4"/>
+      <rect class="bd-cf" style="--delay:-.2s;--d:1.6s;--tx:-8px;--r:320deg"x="-9" y="-16" width="1"   height="1.6" fill="#44DD88"/>
+      <rect class="bd-cf" style="--delay:-.7s;--d:1.05s;--tx:4px;--r:180deg"x="9"  y="-24" width="1.6" height="1"   fill="#FF9500"/>
+      <rect class="bd-cf" style="--delay:-.45s;--d:1.35s;--tx:-5px;--r:240deg"x="16" y="-18" width="1"  height="1"   fill="#CC44FF"/>
+      <rect class="bd-cf" style="--delay:-.85s;--d:1.15s;--tx:2px;--r:120deg"x="-3" y="-21" width="1.6" height="1.6" fill="#FFD700"/>
+    </g>
+
+    <rect class="bd-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+
+    <g class="bd-all">
+      <!-- party hat (sits on head, moves with body) -->
+      <g class="bd-hat">
+        <rect x="6.5" y="-1.5" width="2" height="2" fill="#fff"/>
+        <rect x="6"   y=".5" width="3"  height="1" fill="#FF4444"/>
+        <rect x="5"   y="1.5" width="5"  height="1" fill="#FFD700"/>
+        <rect x="4"   y="2.5" width="7"  height="1" fill="#FF4444"/>
+        <rect x="3"   y="3.5"  width="9"  height="1" fill="#FFD700"/>
+        <rect x="2"   y="4.5"  width="11" height="1.2" fill="#FF4444"/>
+        <rect x="2"   y="5.5"  width="11" height=".6" fill="#fff" opacity=".55"/>
+      </g>
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="bd-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="bd-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="bd-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+
+    <!-- cake (foreground, in front of feet) -->
+    <g transform="translate(2.5,13.5)">
+      <rect x="-1" y="3.2" width="11" height=".8" fill="#bbb"/>            <!-- plate -->
+      <rect x="0" y="0" width="9" height="3.4" fill="#F48FB1"/>
+      <rect x="0" y="-.6" width="9" height="1" fill="#fff"/>
+      <rect x="1" y="-.6" width="1" height="1.5" fill="#fff"/>
+      <rect x="4" y="-.6" width="1" height="1.7" fill="#fff"/>
+      <rect x="7" y="-.6" width="1" height="1.4" fill="#fff"/>
+      <rect x="0" y="1.6" width="9" height=".5" fill="#fff" opacity=".4"/>
+      <rect x="4" y="-4" width="1" height="3.4" fill="#FFD700"/>            <!-- candle -->
+      <g class="bd-flame">
+        <rect x="4" y="-6" width="1" height="2" fill="#FF6B00"/>
+        <rect x="4.2" y="-6.5" width=".6" height="1" fill="#FFD700"/>
+      </g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🎂</div><div class="card-name">生日快乐</div>
+    <div class="card-desc">挥手雀跃 · 派对帽随身摆动<br>蜡烛火苗 · 八色纸屑纷飞</div>
+    <div class="tag">Birthday</div>
+  </div>
+</div>
+
+<!-- ════════ 2. 春节 SPRING FESTIVAL ════════ -->
+<div class="card" style="--glow:rgba(220,30,30,.2);--bd:rgba(220,50,50,.5);--bg:linear-gradient(180deg,#1a0303,#080808);--tagbg:rgba(220,50,50,.12);--tagfg:#ff5555">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .sp-body{transform-origin:7.5px 13px;animation:sp-bow 3.2s infinite ease-in-out;}
+      .sp-shad{transform-origin:7.5px 15.5px;animation:sp-shadow 3.2s infinite ease-in-out;}
+      .sp-eye {transform-origin:7.5px 9px;animation:sp-blink 3.2s infinite;}
+      .sp-al  {transform-origin:2px 10px;animation:sp-arm-l 3.2s infinite ease-in-out;}
+      .sp-ar  {transform-origin:14px 10px;animation:sp-arm-r 3.2s infinite ease-in-out;}
+      .sp-lanl{transform-origin:-8px -22px;animation:sp-lan .9s infinite alternate ease-in-out;}
+      .sp-lanr{transform-origin:23px -22px;animation:sp-lan .9s infinite alternate-reverse ease-in-out;}
+      .sp-fu  {transform-origin:18px -3px;animation:sp-fupulse 2.4s infinite ease-in-out;}
+      .sp-coin{opacity:0;animation:sp-coinfall var(--d,1.5s) var(--delay,0s) infinite ease-in;}
+      @keyframes sp-bow{
+        0%,22%,100%{transform:rotate(0deg) translateY(0);}
+        42%,62%{transform:rotate(-16deg) translate(-1px,1.2px);}
+        80%{transform:rotate(-4deg) translateX(-.4px);}
+      }
+      @keyframes sp-shadow{
+        0%,22%,100%{transform:scaleX(1);opacity:.5;}
+        52%{transform:scaleX(.78) translateX(-1px);opacity:.35;}
+      }
+      @keyframes sp-blink{0%,36%,64%,100%{transform:translate(-.5px,.5px) scaleY(.72);}50%{transform:translate(-.5px,.5px) scaleY(.1);}}
+      @keyframes sp-arm-l{0%,22%,100%{transform:rotate(0deg);}42%,62%{transform:rotate(58deg) translate(1px,-1.2px);}}
+      @keyframes sp-arm-r{0%,22%,100%{transform:rotate(0deg);}42%,62%{transform:rotate(-58deg) translate(-1px,-1.2px);}}
+      @keyframes sp-lan{0%{transform:rotate(-7deg);}100%{transform:rotate(7deg);}}
+      @keyframes sp-fupulse{0%,100%{opacity:.85;transform:scale(1) rotate(0deg);}50%{opacity:1;transform:scale(1.06) rotate(0deg);}}
+      @keyframes sp-coinfall{
+        0%{opacity:0;transform:translate(0,0) rotate(0deg);}
+        14%{opacity:1;}
+        88%{opacity:.8;}
+        100%{opacity:0;transform:translate(var(--tx,2px),20px) rotate(360deg);}
+      }
+    </style></defs>
+
+    <line x1="-8" y1="-25" x2="-8" y2="-22" stroke="#7a0000" stroke-width=".5"/>
+    <line x1="23" y1="-25" x2="23" y2="-22" stroke="#7a0000" stroke-width=".5"/>
+
+    <!-- 灯笼 -->
+    <g class="sp-lanl" transform="translate(-8,-22)">
+      <rect x="-2.2" y="0" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-2.6" y=".6" width="5.2" height="5.4" fill="#CC0000" rx="1.2"/>
+      <rect x="-1.6" y=".8" width="1.6" height="5" fill="#E03030" opacity=".5" rx=".8"/>
+      <rect x="-1.2" y="2" width="2.4" height=".5" fill="#FFC83D"/>
+      <rect x="-.4" y="2.5" width="1" height="1.6" fill="#FFC83D"/>
+      <rect x="-2.2" y="6" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-1.4" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+      <rect x="-.25" y="6.6" width=".5" height="2.8" fill="#FFC83D"/>
+      <rect x="0.9" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+    </g>
+    <g class="sp-lanr" transform="translate(23,-22)">
+      <rect x="-2.2" y="0" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-2.6" y=".6" width="5.2" height="5.4" fill="#CC0000" rx="1.2"/>
+      <rect x="-1.6" y=".8" width="1.6" height="5" fill="#E03030" opacity=".5" rx=".8"/>
+      <rect x="-1.2" y="2" width="2.4" height=".5" fill="#FFC83D"/>
+      <rect x="-.4" y="2.5" width="1" height="1.6" fill="#FFC83D"/>
+      <rect x="-2.2" y="6" width="4.4" height=".6" fill="#FFC83D"/>
+      <rect x="-1.4" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+      <rect x="-.25" y="6.6" width=".5" height="2.8" fill="#FFC83D"/>
+      <rect x="0.9" y="6.6" width=".5" height="2.4" fill="#FFC83D"/>
+    </g>
+
+    <!-- 福 on red diamond -->
+    <g class="sp-fu" transform="translate(18,-3)">
+      <rect x="-4" y="-4" width="8" height="8" fill="#CC0000" transform="rotate(45)"/>
+      <rect x="-3" y="-3" width="6" height="6" fill="#E81818" transform="rotate(45)" opacity=".6"/>
+      <g fill="#FFD700">
+        <rect x="-2.8" y="-2.6" width="5.6" height=".8"/>
+        <rect x="-.4" y="-1.8" width="1" height="4"/>
+        <rect x="-2.2" y="-1" width="4.8" height=".7"/>
+        <rect x="-2.2" y="-.3" width="1.8" height="1.8"/>
+        <rect x=".6" y="-.3" width="1.8" height="1.8"/>
+        <rect x="-2.2" y="1.5" width="4.8" height=".8"/>
+      </g>
+    </g>
+
+    <!-- gold coins -->
+    <g>
+      <rect class="sp-coin" style="--delay:0s;--d:1.6s;--tx:-3px"  x="-11" y="-15" width="2" height="2" rx="1" fill="#FFD700"/>
+      <rect class="sp-coin" style="--delay:-.5s;--d:1.4s;--tx:2px"  x="-13" y="-10" width="1.6" height="1.6" rx=".8" fill="#FFC107"/>
+      <rect class="sp-coin" style="--delay:-1s;--d:1.7s;--tx:-2px"  x="-9" y="-18" width="1.6" height="1.6" rx=".8" fill="#FFEB3B"/>
+    </g>
+
+    <rect class="sp-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="sp-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="2" y="10" width="11" height="2" fill="#CC0000"/>
+      <rect x="2" y="10" width="11" height=".7" fill="#FF3838"/>
+      <g class="sp-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="sp-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="sp-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🧧</div><div class="card-name">新年快乐</div>
+    <div class="card-desc">拱手作揖 · 灯笼带流苏摇曳<br>菱形福字脉动 · 金币纷落</div>
+    <div class="tag">春节 · Spring Festival</div>
+  </div>
+</div>
+
+<!-- ════════ 3. 中秋 MID-AUTUMN ════════ -->
+<div class="card" style="--glow:rgba(255,200,50,.2);--bd:rgba(255,200,60,.5);--bg:linear-gradient(180deg,#060a16,#080808);--tagbg:rgba(255,200,50,.12);--tagfg:#ffd040">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .ma-body{transform-origin:7.5px 13px;animation:ma-look 6.5s infinite ease-in-out;}
+      .ma-shad{transform-origin:7.5px 15.5px;animation:ma-shadow 6.5s infinite ease-in-out;}
+      .ma-eye {transform-origin:7.5px 9px;animation:ma-eye 6.5s infinite ease-in-out;}
+      .ma-moon{transform-origin:7.5px -18px;animation:ma-moon 8s infinite ease-in-out;}
+      .ma-rabbit{transform-origin:7.5px -18px;animation:ma-rabbit 4s infinite ease-in-out;}
+      .ma-star{animation:ma-star var(--d,2s) var(--sd,0s) infinite ease-in-out;}
+      @keyframes ma-look{0%,28%,100%{transform:rotate(0deg) translateY(0);}40%,82%{transform:rotate(-9deg) translate(-.6px,-.5px);}}
+      @keyframes ma-shadow{0%,28%,100%{opacity:.5;transform:scaleX(1);}60%{opacity:.35;transform:scaleX(.86) translateX(-.4px);}}
+      @keyframes ma-eye{0%,28%,100%{transform:translate(0,0) scaleY(1);}33%{transform:scaleY(.1);}36%,82%{transform:translate(-.6px,-.9px) scaleY(.82);}}
+      @keyframes ma-moon{0%,100%{transform:translateY(0);}50%{transform:translateY(-1.5px);}}
+      @keyframes ma-rabbit{0%,100%{transform:translateY(0);}50%{transform:translateY(-.6px);}}
+      @keyframes ma-star{0%,100%{opacity:.3;transform:scale(.7);}50%{opacity:1;transform:scale(1.2);}}
+    </style></defs>
+
+    <g class="ma-moon">
+      <circle cx="7.5" cy="-17" r="8" fill="#FFF0A0"/>
+      <circle cx="7.5" cy="-17" r="8.6" fill="none" stroke="#FFF0A0" stroke-width=".9" opacity=".25"/>
+      <circle cx="4.5" cy="-19.5" r="1.3" fill="#F0DC6A" opacity=".45"/>
+      <circle cx="10.5" cy="-15" r=".9" fill="#F0DC6A" opacity=".4"/>
+      <!-- jade rabbit silhouette -->
+      <g class="ma-rabbit" fill="#E8CF6A" opacity=".7">
+        <ellipse cx="7.5" cy="-14.5" rx="2" ry="1.4"/>
+        <circle cx="6.2" cy="-16" r="1.1"/>
+        <rect x="5.4" y="-18.5" width=".7" height="2.2" rx=".35" transform="rotate(-12,5.7,-17.4)"/>
+        <rect x="6.4" y="-18.6" width=".7" height="2.2" rx=".35" transform="rotate(8,6.7,-17.5)"/>
+      </g>
+    </g>
+
+    <rect class="ma-star" style="--d:1.8s;--sd:0s"   x="-12" y="-23" width="1" height="1" fill="#FFF8DC" rx=".2"/>
+    <rect class="ma-star" style="--d:2.4s;--sd:-.6s" x="21" y="-22" width=".8" height=".8" fill="#FFF8DC" rx=".2"/>
+    <rect class="ma-star" style="--d:1.5s;--sd:-1s"  x="-5" y="-24" width=".6" height=".6" fill="#FFF8DC" rx=".1"/>
+    <rect class="ma-star" style="--d:3s;--sd:-.4s"   x="24" y="-15" width=".8" height=".8" fill="#FFF8DC" rx=".2"/>
+    <rect class="ma-star" style="--d:2s;--sd:-.9s"   x="-13" y="-13" width=".6" height=".6" fill="#FFF8DC" rx=".1"/>
+
+    <rect class="ma-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="ma-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- right arm holds a mooncake up -->
+      <rect x="13" y="7" width="2" height="2" fill="#DE886D"/>
+      <g transform="translate(13.5,3.5)">
+        <rect x="0" y="0" width="4" height="3.2" fill="#C8860A" rx=".4"/>
+        <rect x=".4" y=".4" width="3.2" height="2.4" fill="#D4950F" rx=".3"/>
+        <rect x="1" y=".9" width="2" height=".4" fill="#A06808"/>
+        <rect x="1.8" y="1.3" width=".4" height="1.2" fill="#A06808"/>
+      </g>
+      <g class="ma-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🌕</div><div class="card-name">中秋快乐</div>
+    <div class="card-desc">举饼望月 · 玉兔轻浮于月轮<br>星辰闪烁 · 眼神追月</div>
+    <div class="tag">中秋 · Mid-Autumn</div>
+  </div>
+</div>
+
+<!-- ════════ 4. 端午 DRAGON BOAT ════════ -->
+<div class="card" style="--glow:rgba(50,200,100,.2);--bd:rgba(60,200,100,.5);--bg:linear-gradient(180deg,#04130a,#080808);--tagbg:rgba(60,200,100,.12);--tagfg:#44cc88">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .db-boat{transform-origin:7.5px 12px;animation:db-bob 1.6s infinite ease-in-out;}
+      .db-body{transform-origin:7.5px 10px;animation:db-row .7s infinite ease-in-out;}
+      .db-eye {transform-origin:7.5px 9px;animation:db-eye 1.4s infinite;}
+      .db-al  {transform-origin:2px 10px;animation:db-arm-l .7s infinite ease-in-out;}
+      .db-ar  {transform-origin:14px 10px;animation:db-arm-r .7s infinite ease-in-out;}
+      .db-wave{animation:db-wave 1.1s var(--wd,0s) infinite linear;}
+      .db-zz  {transform-origin:50% 50%;animation:db-zbob 2.2s infinite ease-in-out;}
+      @keyframes db-bob{0%,100%{transform:translateY(0) rotate(-1.5deg);}50%{transform:translateY(-1px) rotate(1.5deg);}}
+      @keyframes db-row{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+      @keyframes db-eye{0%,42%,58%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes db-arm-l{0%,100%{transform:rotate(-48deg) translateY(-.5px);}50%{transform:rotate(12deg) translateY(.4px);}}
+      @keyframes db-arm-r{0%,100%{transform:rotate(48deg) translateY(-.5px);}50%{transform:rotate(-12deg) translateY(.4px);}}
+      @keyframes db-wave{0%{transform:translateX(0) scaleY(1);}50%{transform:translateX(-3px) scaleY(1.4);}100%{transform:translateX(-6px) scaleY(1);}}
+      @keyframes db-zbob{0%,100%{transform:translateY(0) rotate(-6deg);}50%{transform:translateY(-2px) rotate(6deg);}}
+    </style></defs>
+
+    <!-- 粽子 floating -->
+    <g class="db-zz" transform="translate(-11,-4)">
+      <polygon points="3.5,0 6.5,2 6.5,7.5 3.5,9.5 .5,7.5 .5,2" fill="#2D7A2D"/>
+      <polygon points="3.5,0 6.5,2 3.5,2.2" fill="#3D9A3D"/>
+      <polygon points="3.5,0 .5,2 3.5,2.2" fill="#225C22"/>
+      <rect x="3.1" y="-1" width=".8" height="2" fill="#8B5A2B"/>
+      <rect x="1.6" y="1.2" width="4" height=".6" fill="#8B5A2B"/>
+      <rect x="1.6" y="4" width="4" height=".4" fill="#1A5A1A" opacity=".6"/>
+      <rect x="1.6" y="6.2" width="4" height=".4" fill="#1A5A1A" opacity=".6"/>
+    </g>
+
+    <g class="db-boat">
+      <!-- water under boat -->
+      <g opacity=".75">
+        <rect class="db-wave" style="--wd:0s"   x="-6" y="15" width="42" height="1.4" fill="#1A7A3A" rx=".7"/>
+        <rect class="db-wave" style="--wd:-.4s" x="-6" y="15.5" width="42" height=".6" fill="#4ECB7B" opacity=".5" rx=".3"/>
+      </g>
+      <!-- boat hull -->
+      <path d="M-7 11 Q-9 14 -5 14 H17 Q21 14 19 11 Z" fill="#7a3b12"/>
+      <path d="M-6 11 H18 V12.4 H-6 Z" fill="#9a5424"/>
+      <rect x="-6" y="11" width="24" height=".5" fill="#c8893f"/>
+      <!-- dragon head prow (left) -->
+      <g transform="translate(-13,7)">
+        <rect x="0" y="0" width="5" height="4" fill="#CC2200" rx=".4"/>
+        <rect x="1" y="-2" width=".9" height="2.2" fill="#CC2200"/>
+        <rect x="2.6" y="-2.4" width=".7" height="1.8" fill="#CC2200"/>
+        <rect x="3.6" y=".8" width=".9" height=".9" fill="#FFD700" rx=".2"/>
+        <rect x="3.8" y="1" width=".4" height=".4" fill="#000"/>
+        <rect x=".3" y="1.6" width="3.5" height=".5" fill="#AA1800" opacity=".5"/>
+        <rect x="4.6" y="1.5" width="1.3" height="2.2" fill="#CC2200"/>
+        <rect x="4.6" y="1.6" width=".5" height=".7" fill="#fff"/>
+        <rect x="5.1" y="2.6" width=".5" height=".7" fill="#fff"/>
+      </g>
+      <!-- dragon tail (right) -->
+      <g transform="translate(18,8)">
+        <polygon points="0,0 4,-1.5 3,3 0,3" fill="#CC2200"/>
+        <rect x="2.5" y="-1" width="1.5" height=".6" fill="#AA1800"/>
+      </g>
+
+      <!-- paddles -->
+      <g class="db-al"><rect x="-2" y="8" width=".6" height="6" fill="#8B5A2B"/><rect x="-3.2" y="13" width="2.6" height="1.5" fill="#1A5A8A" rx=".2"/></g>
+      <g class="db-ar"><rect x="16.4" y="8" width=".6" height="6" fill="#8B5A2B"/><rect x="16.6" y="13" width="2.6" height="1.5" fill="#1A5A8A" rx=".2"/></g>
+
+      <!-- crab rower -->
+      <g class="db-body">
+        <rect x="2" y="4" width="11" height="2.4" fill="#1A7A3A"/>            <!-- 头巾 -->
+        <rect x="2" y="5" width="11" height=".7" fill="#FFD700" opacity=".7"/>
+        <rect x="13" y="4" width="2" height="1" fill="#1A7A3A"/>
+        <rect x="14" y="5" width="1" height="3" fill="#1A7A3A"/>
+        <rect x="2" y="6" width="11" height="6" fill="#DE886D"/>
+        <g class="db-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+        <g class="db-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+        <g class="db-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      </g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🐉</div><div class="card-name">端午安康</div>
+    <div class="card-desc">坐镇龙舟 · 双桨破浪 · 船身起伏<br>龙首龙尾 · 粽子飘香 · 青巾束发</div>
+    <div class="tag">端午 · Dragon Boat</div>
+  </div>
+</div>
+
+<!-- ════════ 5. 圣诞 CHRISTMAS ════════ -->
+<div class="card" style="--glow:rgba(40,180,90,.2);--bd:rgba(220,50,50,.5);--bg:linear-gradient(180deg,#06140d,#080808);--tagbg:rgba(220,50,50,.12);--tagfg:#ff6b6b">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .xm-body{transform-origin:7.5px 13px;animation:xm-sway 2.6s infinite ease-in-out;}
+      .xm-shad{transform-origin:7.5px 15.5px;animation:xm-shadow 2.6s infinite ease-in-out;}
+      .xm-eye {transform-origin:7.5px 9px;animation:xm-blink 3s infinite;}
+      .xm-pom {transform-origin:9px -2px;animation:xm-pom 2.6s infinite ease-in-out;}
+      .xm-snow{opacity:0;animation:xm-snow var(--d,3s) var(--delay,0s) infinite linear;}
+      .xm-star{transform-origin:center;animation:xm-twinkle 1.6s infinite ease-in-out;}
+      @keyframes xm-sway{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(2deg);}}
+      @keyframes xm-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(1.04);opacity:.45;}}
+      @keyframes xm-blink{0%,45%,55%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes xm-pom{0%,100%{transform:rotate(0deg) translateX(0);}50%{transform:rotate(10deg) translateX(.6px);}}
+      @keyframes xm-snow{0%{opacity:0;transform:translate(0,-2px);}12%{opacity:1;}88%{opacity:.9;}100%{opacity:0;transform:translate(var(--tx,-3px),26px);}}
+      @keyframes xm-twinkle{0%,100%{opacity:.5;transform:scale(.8);}50%{opacity:1;transform:scale(1.15);}}
+    </style></defs>
+
+    <!-- snow -->
+    <g fill="#fff">
+      <rect class="xm-snow" style="--delay:0s;--d:3.2s;--tx:-3px"  x="-10" y="-23" width="1.2" height="1.2" rx=".6"/>
+      <rect class="xm-snow" style="--delay:-.8s;--d:2.8s;--tx:2px"  x="-2" y="-24" width="1" height="1" rx=".5"/>
+      <rect class="xm-snow" style="--delay:-1.5s;--d:3.5s;--tx:-2px" x="6" y="-23" width="1.4" height="1.4" rx=".7"/>
+      <rect class="xm-snow" style="--delay:-.4s;--d:3s;--tx:3px"     x="14" y="-24" width="1" height="1" rx=".5"/>
+      <rect class="xm-snow" style="--delay:-2s;--d:3.3s;--tx:-1px"   x="20" y="-22" width="1.2" height="1.2" rx=".6"/>
+      <rect class="xm-snow" style="--delay:-1.2s;--d:2.6s;--tx:2px"  x="-13" y="-21" width="1" height="1" rx=".5"/>
+      <rect class="xm-snow" style="--delay:-2.4s;--d:3.4s;--tx:-3px" x="23" y="-20" width="1.2" height="1.2" rx=".6"/>
+    </g>
+
+    <!-- christmas tree (left) -->
+    <g transform="translate(-13,4)">
+      <polygon points="3,-2 5.5,2 .5,2" fill="#2E7D32"/>
+      <polygon points="3,0 6,4 0,4" fill="#388E3C"/>
+      <polygon points="3,2 6.5,7 -.5,7" fill="#43A047"/>
+      <rect x="2.4" y="7" width="1.2" height="2" fill="#6D4C41"/>
+      <g class="xm-star" style="transform-origin:3px -2px"><rect x="2.4" y="-3.4" width="1.2" height="1.2" fill="#FFD700" rx=".2"/></g>
+      <circle cx="1.8" cy="3" r=".5" fill="#FF5252"/>
+      <circle cx="4.2" cy="2" r=".5" fill="#FFD700"/>
+      <circle cx="3" cy="5.5" r=".5" fill="#42A5F5"/>
+    </g>
+
+    <rect class="xm-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="xm-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <!-- santa hat -->
+      <rect x="2" y="3" width="10" height="2" fill="#CC0000"/>
+      <rect x="3" y="1" width="8" height="2" fill="#D81B1B"/>
+      <rect x="5" y="-.5" width="5" height="2" fill="#E53535"/>
+      <g class="xm-pom"><rect x="8" y="-2" width="3" height="2" fill="#fff" rx=".5"/></g>
+      <rect x="2" y="4.6" width="10" height="1.6" fill="#fff"/>            <!-- white trim -->
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <!-- green+red scarf -->
+      <rect x="2" y="10.5" width="11" height="1.8" fill="#1B7A3A"/>
+      <rect x="2" y="10.5" width="11" height=".6" fill="#34C75A"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <g class="xm-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🎄</div><div class="card-name">圣诞快乐</div>
+    <div class="card-desc">圣诞帽绒球摆动 · 雪花飘落<br>圣诞树星灯闪烁 · 红绿围巾</div>
+    <div class="tag">圣诞 · Christmas</div>
+  </div>
+</div>
+
+<!-- ════════ 6. 万圣节 HALLOWEEN ════════ -->
+<div class="card" style="--glow:rgba(255,120,0,.2);--bd:rgba(160,80,200,.5);--bg:linear-gradient(180deg,#100618,#080808);--tagbg:rgba(160,80,200,.14);--tagfg:#c07af0">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .hw-body{transform-origin:7.5px 13px;animation:hw-float 2.4s infinite ease-in-out;}
+      .hw-shad{transform-origin:7.5px 15.5px;animation:hw-shadow 2.4s infinite ease-in-out;}
+      .hw-eye {transform-origin:7.5px 9px;animation:hw-eyeglow 2s infinite ease-in-out;}
+      .hw-hat {transform-origin:7.5px 5.5px;animation:hw-hat 2.4s infinite ease-in-out;}
+      .hw-ghost{animation:hw-ghost 3s infinite ease-in-out;}
+      .hw-bat {animation:hw-batfly 4s var(--bd2,0s) infinite linear;}
+      .hw-wing{transform-origin:center;animation:hw-flap .25s infinite alternate ease-in-out;}
+      .hw-pump{animation:hw-pumpglow 1.5s infinite ease-in-out;}
+      @keyframes hw-float{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-2px) rotate(1deg);}}
+      @keyframes hw-shadow{0%,100%{transform:scaleX(1);opacity:.45;}50%{transform:scaleX(.86);opacity:.3;}}
+      @keyframes hw-eyeglow{0%,100%{transform:scaleY(1);opacity:.85;}50%{transform:scaleY(1);opacity:1;}}
+      @keyframes hw-hat{0%,100%{transform:rotate(0deg);}50%{transform:rotate(-5deg);}}
+      @keyframes hw-ghost{0%,100%{opacity:.5;transform:translate(0,0);}50%{opacity:.9;transform:translate(2px,-3px);}}
+      @keyframes hw-batfly{0%{transform:translate(-16px,0);}50%{transform:translate(20px,-4px);}100%{transform:translate(-16px,0);}}
+      @keyframes hw-flap{0%{transform:scaleX(1);}100%{transform:scaleX(.4);}}
+      @keyframes hw-pumpglow{0%,100%{filter:brightness(1);}50%{filter:brightness(1.25);}}
+    </style></defs>
+
+    <!-- bats -->
+    <g fill="#1a1a1a">
+      <g class="hw-bat" style="--bd2:0s"><g transform="translate(0,-20)"><rect x="-.6" y="-.6" width="1.2" height="1.2" rx=".3"/><g class="hw-wing"><polygon points="-.6,0 -3,-1.2 -2.4,1 -.6,.6"/><polygon points=".6,0 3,-1.2 2.4,1 .6,.6"/></g></g></g>
+      <g class="hw-bat" style="--bd2:-2s"><g transform="translate(0,-15)" style="scale:.7"><rect x="-.6" y="-.6" width="1.2" height="1.2" rx=".3"/><g class="hw-wing"><polygon points="-.6,0 -3,-1.2 -2.4,1 -.6,.6"/><polygon points=".6,0 3,-1.2 2.4,1 .6,.6"/></g></g></g>
+    </g>
+
+    <!-- ghost -->
+    <g class="hw-ghost" transform="translate(18,-4)">
+      <path d="M0 0 Q0 -4 3 -4 Q6 -4 6 0 V4 L5 3 L4 4 L3 3 L2 4 L1 3 L0 4 Z" fill="#E8E8F0" opacity=".85"/>
+      <rect x="1.6" y="-1.6" width="1" height="1.4" fill="#333"/>
+      <rect x="3.6" y="-1.6" width="1" height="1.4" fill="#333"/>
+      <ellipse cx="3" cy="1.4" rx=".7" ry="1" fill="#333"/>
+    </g>
+
+    <rect class="hw-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".45"/>
+
+    <!-- jack-o-lantern (foreground left) -->
+    <g class="hw-pump" transform="translate(-13,9)">
+      <rect x="3" y="-2" width="1" height="1.5" fill="#3A7D2C"/>            <!-- stem -->
+      <ellipse cx="3.5" cy="3" rx="4" ry="3.4" fill="#E8731A"/>
+      <ellipse cx="1.6" cy="3" rx="1.4" ry="3.2" fill="#FF8C2E" opacity=".5"/>
+      <ellipse cx="5.4" cy="3" rx="1.4" ry="3.2" fill="#C85E12" opacity=".5"/>
+      <polygon points="1.5,2 3,2 2.2,3.2" fill="#FFD54F"/>           <!-- eye -->
+      <polygon points="5.5,2 4,2 4.8,3.2" fill="#FFD54F"/>
+      <polygon points="2,4.2 3,5 4,4.2 5,5 2.5,5.2" fill="#FFD54F"/>  <!-- mouth -->
+    </g>
+
+    <g class="hw-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <!-- witch hat -->
+      <g class="hw-hat">
+        <polygon points="7.5,-2.5 5,4.5 10,4.5" fill="#3A1A5A"/>
+        <rect x="2" y="4.5" width="11" height="1.4" fill="#3A1A5A"/>
+        <rect x="5.6" y="2.9" width="3.5" height="1.6" fill="#FFC107"/>  <!-- band -->
+        <rect x="6.4" y="3.1" width="1.8" height="1.2" fill="#3A1A5A"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- glowing eyes -->
+      <g class="hw-eye" fill="#FF7A00"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🎃</div><div class="card-name">万圣节</div>
+    <div class="card-desc">悬浮飘动 · 女巫帽 · 橙瞳幽光<br>南瓜灯脉动 · 幽灵游荡 · 蝙蝠掠过</div>
+    <div class="tag">万圣节 · Halloween</div>
+  </div>
+</div>
+
+<!-- ════════ 7. 元旦新年 NEW YEAR ════════ -->
+<div class="card" style="--glow:rgba(255,80,140,.2);--bd:rgba(255,100,160,.5);--bg:linear-gradient(180deg,#0a0614,#080808);--tagbg:rgba(255,100,160,.12);--tagfg:#ff6bb0">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .ny-body{transform-origin:7.5px 13px;animation:ny-cheer 1.8s infinite ease-in-out;}
+      .ny-shad{transform-origin:7.5px 15.5px;animation:ny-shadow 1.8s infinite ease-in-out;}
+      .ny-eye {transform-origin:7.5px 9px;animation:ny-eye 1.8s infinite;}
+      .ny-al  {transform-origin:2px 10px;animation:ny-arm-l 1.8s infinite ease-in-out;}
+      .ny-ar  {transform-origin:14px 10px;animation:ny-arm-r 1.8s infinite ease-in-out;}
+      .fw1 .fwp{animation:ny-burst 2.4s 0s infinite ease-out;}
+      .fw2 .fwp{animation:ny-burst 2.4s -.9s infinite ease-out;}
+      .fw3 .fwp{animation:ny-burst 2.4s -1.6s infinite ease-out;}
+      .ny-year{animation:ny-yearpulse 2s infinite ease-in-out;}
+      @keyframes ny-cheer{0%,100%{transform:translateY(0);}50%{transform:translateY(-1.5px);}}
+      @keyframes ny-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.94);opacity:.42;}}
+      @keyframes ny-eye{0%,42%,58%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes ny-arm-l{0%,100%{transform:rotate(50deg);}50%{transform:rotate(70deg) translateY(-1px);}}
+      @keyframes ny-arm-r{0%,100%{transform:rotate(-50deg);}50%{transform:rotate(-70deg) translateY(-1px);}}
+      @keyframes ny-burst{
+        0%{opacity:0;transform:scale(.1);}
+        15%{opacity:1;transform:scale(.3);}
+        55%{opacity:1;transform:scale(1);}
+        80%{opacity:.4;transform:scale(1.15);}
+        100%{opacity:0;transform:scale(1.25);}
+      }
+      @keyframes ny-yearpulse{0%,100%{opacity:.8;transform:scale(1);}50%{opacity:1;transform:scale(1.05);}}
+    </style></defs>
+
+    <!-- fireworks (radial pixels from a center) -->
+    <g class="fw1" transform="translate(-7,-16)" fill="#FFD700">
+      <g class="fwp"><rect x="-.5" y="-6" width="1" height="2.4"/><rect x="-.5" y="3.6" width="1" height="2.4"/><rect x="-6" y="-.5" width="2.4" height="1"/><rect x="3.6" y="-.5" width="2.4" height="1"/><rect x="-4.4" y="-4.4" width="1.8" height="1.8"/><rect x="2.6" y="-4.4" width="1.8" height="1.8"/><rect x="-4.4" y="2.6" width="1.8" height="1.8"/><rect x="2.6" y="2.6" width="1.8" height="1.8"/></g>
+    </g>
+    <g class="fw2" transform="translate(7,-19)" fill="#FF5252">
+      <g class="fwp"><rect x="-.5" y="-5" width="1" height="2"/><rect x="-.5" y="3" width="1" height="2"/><rect x="-5" y="-.5" width="2" height="1"/><rect x="3" y="-.5" width="2" height="1"/><rect x="-3.6" y="-3.6" width="1.5" height="1.5"/><rect x="2.1" y="-3.6" width="1.5" height="1.5"/><rect x="-3.6" y="2.1" width="1.5" height="1.5"/><rect x="2.1" y="2.1" width="1.5" height="1.5"/></g>
+    </g>
+    <g class="fw3" transform="translate(19,-14)" fill="#44CCFF">
+      <g class="fwp"><rect x="-.5" y="-4.5" width="1" height="1.8"/><rect x="-.5" y="2.7" width="1" height="1.8"/><rect x="-4.5" y="-.5" width="1.8" height="1"/><rect x="2.7" y="-.5" width="1.8" height="1"/><rect x="-3.2" y="-3.2" width="1.3" height="1.3"/><rect x="1.9" y="-3.2" width="1.3" height="1.3"/><rect x="-3.2" y="1.9" width="1.3" height="1.3"/><rect x="1.9" y="1.9" width="1.3" height="1.3"/></g>
+    </g>
+
+    <!-- 2026 pixel text -->
+    <g class="ny-year" fill="#FFE066" transform="translate(-6,-23)">
+      <text x="0" y="0" font-family="monospace" font-weight="bold" font-size="4" fill="#FFE066">2026</text>
+    </g>
+
+    <rect class="ny-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="ny-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <g class="ny-al"><rect x="0" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="ny-ar"><rect x="13" y="9" width="2" height="2" fill="#DE886D"/></g>
+      <g class="ny-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+      <!-- open smile -->
+      <rect x="6" y="11" width="3" height="1" fill="#000" rx=".5"/>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🎆</div><div class="card-name">元旦快乐</div>
+    <div class="card-desc">举臂欢呼 · 三色烟花绽放<br>2026 跨年 · 张嘴大笑</div>
+    <div class="tag">元旦 · New Year</div>
+  </div>
+</div>
+
+<!-- ════════ 8. 元宵节 LANTERN FESTIVAL ════════ -->
+<div class="card" style="--glow:rgba(255,160,40,.2);--bd:rgba(255,170,50,.5);--bg:linear-gradient(180deg,#150a02,#080808);--tagbg:rgba(255,170,50,.12);--tagfg:#ffb030">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .lf-body{transform-origin:7.5px 13px;animation:lf-walk 2.4s infinite ease-in-out;}
+      .lf-shad{transform-origin:7.5px 15.5px;animation:lf-shadow 2.4s infinite ease-in-out;}
+      .lf-eye {transform-origin:7.5px 9px;animation:lf-blink 3s infinite;}
+      .lf-arm {transform-origin:14px 9px;animation:lf-armhold 2.4s infinite ease-in-out;}
+      .lf-lan {transform-origin:18px -6px;animation:lf-lanswing 2.4s infinite ease-in-out;}
+      .lf-glow{animation:lf-glowpulse 2s infinite ease-in-out;}
+      .lf-steam{opacity:0;animation:lf-steam 2.5s var(--sd2,0s) infinite ease-in;}
+      @keyframes lf-walk{0%,100%{transform:translateY(0) rotate(-1.5deg);}50%{transform:translateY(-.8px) rotate(1.5deg);}}
+      @keyframes lf-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(.92);opacity:.42;}}
+      @keyframes lf-blink{0%,45%,55%,100%{transform:scaleY(1);}50%{transform:scaleY(.1);}}
+      @keyframes lf-armhold{0%,100%{transform:rotate(-58deg);}50%{transform:rotate(-64deg);}}
+      @keyframes lf-lanswing{0%,100%{transform:rotate(4deg);}50%{transform:rotate(-4deg);}}
+      @keyframes lf-glowpulse{0%,100%{opacity:.85;}50%{opacity:1;}}
+      @keyframes lf-steam{0%{opacity:0;transform:translate(0,0) scaleX(1);}20%{opacity:.7;}100%{opacity:0;transform:translate(var(--tx,1px),-7px) scaleX(.4);}}
+    </style></defs>
+
+    <!-- warm glow halo -->
+    <circle class="lf-glow" cx="18" cy="-2" r="9" fill="#FF9500" opacity=".12"/>
+
+    <rect class="lf-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+
+    <!-- bowl of tangyuan (foreground left) -->
+    <g transform="translate(-13,9)">
+      <g fill="#fff">
+        <g class="lf-steam" style="--sd2:0s;--tx:-1px"><rect x="2" y="-1" width=".8" height="2" rx=".4"/></g>
+        <g class="lf-steam" style="--sd2:-1.2s;--tx:1px"><rect x="4" y="-1" width=".8" height="2" rx=".4"/></g>
+      </g>
+      <path d="M0 2 H8 L7 6 Q4 7.5 1 6 Z" fill="#4FC3F7"/>            <!-- bowl -->
+      <path d="M0 2 H8 V3 H0 Z" fill="#81D4FA"/>
+      <circle cx="2.5" cy="2.4" r="1.3" fill="#FFF8F0"/>             <!-- 汤圆 -->
+      <circle cx="5.2" cy="2.4" r="1.3" fill="#FFF8F0"/>
+      <circle cx="3.9" cy="3.4" r="1.3" fill="#FFFBF5"/>
+      <circle cx="2.2" cy="2" r=".4" fill="#fff"/>
+      <circle cx="4.9" cy="2" r=".4" fill="#fff"/>
+    </g>
+
+    <g class="lf-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- right arm holds lantern pole -->
+      <g class="lf-arm"><rect x="13" y="8" width="2" height="2" fill="#DE886D"/></g>
+      <g class="lf-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+
+    <!-- lantern on pole (swings) -->
+    <g class="lf-lan">
+      <rect x="14" y="-3" width=".6" height="6" fill="#8B5A2B" transform="rotate(28,14,3)"/>
+      <g transform="translate(18,-6)">
+        <rect x="-2" y="0" width="4" height=".6" fill="#FFC83D"/>
+        <rect x="-2.4" y=".6" width="4.8" height="5" fill="#E03030" rx="1.1"/>
+        <g class="lf-glow"><rect x="-1.4" y="1" width="3.2" height="4" fill="#FFB347" rx=".8" opacity=".6"/></g>
+        <rect x="-2" y="5.6" width="4" height=".6" fill="#FFC83D"/>
+        <rect x="-1.2" y="6.2" width=".4" height="2" fill="#FFC83D"/>
+        <rect x="-.2" y="6.2" width=".4" height="2.4" fill="#FFC83D"/>
+        <rect x=".8" y="6.2" width=".4" height="2" fill="#FFC83D"/>
+      </g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🏮</div><div class="card-name">元宵节</div>
+    <div class="card-desc">提灯漫步 · 灯笼暖光摇曳<br>一碗热汤圆 · 热气升腾</div>
+    <div class="tag">元宵 · Lantern Festival</div>
+  </div>
+</div>
+
+<!-- ════════ 9. 情人节 VALENTINE ════════ -->
+<div class="card" style="--glow:rgba(255,70,120,.2);--bd:rgba(255,90,140,.5);--bg:linear-gradient(180deg,#160510,#080808);--tagbg:rgba(255,90,140,.12);--tagfg:#ff5a8c">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .vd-body{transform-origin:7.5px 13px;animation:vd-sway 2.8s infinite ease-in-out;}
+      .vd-shad{transform-origin:7.5px 15.5px;animation:vd-shadow 2.8s infinite ease-in-out;}
+      .vd-heart{transform-origin:7.5px 9px;animation:vd-heartbeat .8s infinite ease-in-out;}
+      .vd-blush{animation:vd-blush 2.8s infinite ease-in-out;}
+      .vd-rise{opacity:0;animation:vd-rise var(--d,2.6s) var(--delay,0s) infinite ease-out;}
+      @keyframes vd-sway{0%,100%{transform:rotate(-2deg);}50%{transform:rotate(2deg);}}
+      @keyframes vd-shadow{0%,100%{transform:scaleX(1);opacity:.5;}50%{transform:scaleX(1.03);opacity:.45;}}
+      @keyframes vd-heartbeat{0%,100%{transform:scale(1);}25%{transform:scale(1.2);}40%{transform:scale(1);}60%{transform:scale(1.15);}}
+      @keyframes vd-blush{0%,100%{opacity:.6;}50%{opacity:.95;}}
+      @keyframes vd-rise{0%{opacity:0;transform:translate(0,0) scale(.5) rotate(0deg);}15%{opacity:1;transform:scale(1);}80%{opacity:.7;}100%{opacity:0;transform:translate(var(--tx,2px),-22px) scale(1.1) rotate(var(--r,15deg));}}
+    </style></defs>
+
+    <!-- rising hearts -->
+    <g fill="#FF4081">
+      <g class="vd-rise" style="--delay:0s;--d:2.8s;--tx:-3px;--r:-12deg" transform="translate(-8,8)"><rect x="0" y="0" width="1.4" height="1.4"/><rect x="2" y="0" width="1.4" height="1.4"/><rect x="0" y="1" width="3.4" height="1.4"/><rect x=".8" y="2.2" width="1.8" height="1"/><rect x="1.4" y="3" width=".6" height=".8"/></g>
+      <g class="vd-rise" style="--delay:-.9s;--d:2.4s;--tx:4px;--r:18deg" transform="translate(15,9)" fill="#FF6EA5"><rect x="0" y="0" width="1.1" height="1.1"/><rect x="1.6" y="0" width="1.1" height="1.1"/><rect x="0" y=".8" width="2.7" height="1.1"/><rect x=".6" y="1.8" width="1.5" height=".8"/><rect x="1.1" y="2.5" width=".5" height=".6"/></g>
+      <g class="vd-rise" style="--delay:-1.6s;--d:3s;--tx:-2px;--r:-20deg" transform="translate(4,10)" fill="#FF80AB"><rect x="0" y="0" width="1.2" height="1.2"/><rect x="1.7" y="0" width="1.2" height="1.2"/><rect x="0" y=".9" width="2.9" height="1.2"/><rect x=".7" y="2" width="1.5" height=".9"/><rect x="1.2" y="2.8" width=".5" height=".7"/></g>
+      <g class="vd-rise" style="--delay:-2.1s;--d:2.5s;--tx:5px;--r:10deg" transform="translate(20,7)" fill="#FF4081"><rect x="0" y="0" width="1" height="1"/><rect x="1.4" y="0" width="1" height="1"/><rect x="0" y=".7" width="2.4" height="1"/><rect x=".5" y="1.6" width="1.4" height=".7"/><rect x="1" y="2.2" width=".4" height=".5"/></g>
+    </g>
+
+    <rect class="vd-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="vd-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <!-- right arm holds a rose -->
+      <rect x="13" y="8" width="2" height="2" fill="#DE886D"/>
+      <g transform="translate(14,2)">
+        <rect x="0" y="3" width=".6" height="4" fill="#2E7D32"/>
+        <rect x="-1" y="4.5" width="1.2" height=".6" fill="#388E3C" transform="rotate(-30,-.4,4.8)"/>
+        <rect x="-1.5" y="0" width="3.2" height="3" fill="#E91E63" rx=".6"/>
+        <rect x="-.8" y=".6" width="1.6" height="1.6" fill="#FF5C8D" rx=".3"/>
+      </g>
+      <!-- blush cheeks -->
+      <g class="vd-blush" fill="#FF7AA8"><rect x="3" y="10" width="1.6" height="1" rx=".5"/><rect x="10.4" y="10" width="1.6" height="1" rx=".5"/></g>
+      <!-- heart eyes -->
+      <g class="vd-heart" fill="#FF1744">
+        <g transform="translate(3.4,8)"><rect x="0" y="0" width=".8" height=".8"/><rect x="1.2" y="0" width=".8" height=".8"/><rect x="0" y=".6" width="2" height=".9"/><rect x=".5" y="1.4" width="1" height=".7"/></g>
+        <g transform="translate(9.4,8)"><rect x="0" y="0" width=".8" height=".8"/><rect x="1.2" y="0" width=".8" height=".8"/><rect x="0" y=".6" width="2" height=".9"/><rect x=".5" y="1.4" width="1" height=".7"/></g>
+      </g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">💝</div><div class="card-name">情人节快乐</div>
+    <div class="card-desc">手捧玫瑰 · 红心眼怦怦跳<br>脸颊泛红 · 爱心冉冉升起</div>
+    <div class="tag">情人节 · Valentine</div>
+  </div>
+</div>
+
+<!-- ════════ 10. 七夕 QIXI ════════ -->
+<div class="card" style="--glow:rgba(120,140,255,.2);--bd:rgba(140,160,255,.5);--bg:linear-gradient(180deg,#060818,#080808);--tagbg:rgba(140,160,255,.12);--tagfg:#8ca0ff">
+  <div class="card-view">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
+    <defs><style>
+      .qx-body{transform-origin:7.5px 13px;animation:qx-look 5s infinite ease-in-out;}
+      .qx-shad{transform-origin:7.5px 15.5px;animation:qx-shadow 5s infinite ease-in-out;}
+      .qx-eye {transform-origin:7.5px 9px;animation:qx-eye 5s infinite ease-in-out;}
+      .qx-bstar{animation:qx-bstar var(--d,2s) var(--sd,0s) infinite ease-in-out;}
+      .qx-big {animation:qx-bigstar 2.5s var(--bd3,0s) infinite ease-in-out;}
+      .qx-mag {animation:qx-magfly 6s infinite ease-in-out;}
+      .qx-wing{transform-origin:center;animation:qx-flap .3s infinite alternate ease-in-out;}
+      .qx-heart{transform-origin:7.5px -18px;animation:qx-heartpulse 1.5s infinite ease-in-out;}
+      @keyframes qx-look{0%,30%,100%{transform:rotate(0deg) translateY(0);}45%,85%{transform:rotate(-7deg) translate(-.5px,-.4px);}}
+      @keyframes qx-shadow{0%,30%,100%{opacity:.5;transform:scaleX(1);}60%{opacity:.35;transform:scaleX(.88);}}
+      @keyframes qx-eye{0%,30%,100%{transform:translate(0,0) scaleY(1);}35%{transform:scaleY(.1);}38%,85%{transform:translate(-.5px,-.8px) scaleY(.82);}}
+      @keyframes qx-bstar{0%,100%{opacity:.3;transform:scale(.6);}50%{opacity:.9;transform:scale(1);}}
+      @keyframes qx-bigstar{0%,100%{opacity:.7;transform:scale(.9);}50%{opacity:1;transform:scale(1.2);}}
+      @keyframes qx-magfly{0%,100%{transform:translate(0,0);}50%{transform:translate(3px,-2px);}}
+      @keyframes qx-flap{0%{transform:scaleX(1);}100%{transform:scaleX(.5);}}
+      @keyframes qx-heartpulse{0%,100%{opacity:.85;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
+    </style></defs>
+
+    <!-- magpie bridge: arc of small stars -->
+    <g fill="#C5CEFF">
+      <rect class="qx-bstar" style="--d:1.6s;--sd:0s"   x="-11" y="-12" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:1.8s;--sd:-.2s" x="-8" y="-15" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:2s;--sd:-.4s"   x="-4" y="-17.5" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:1.7s;--sd:-.6s" x="1" y="-19" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:1.9s;--sd:-.8s" x="7" y="-19.5" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:2.1s;--sd:-1s"  x="13" y="-19" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:1.8s;--sd:-1.2s"x="18" y="-17.5" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:2s;--sd:-1.4s"  x="22" y="-15" width=".8" height=".8" rx=".2"/>
+      <rect class="qx-bstar" style="--d:1.7s;--sd:-1.6s"x="25" y="-12" width=".8" height=".8" rx=".2"/>
+    </g>
+
+    <!-- 牛郎织女 two big stars on either side -->
+    <g class="qx-big" style="--bd3:0s" transform="translate(-11,-8)" fill="#FFE066">
+      <rect x="-.5" y="-2" width="1" height="4"/><rect x="-2" y="-.5" width="4" height="1"/>
+    </g>
+    <g class="qx-big" style="--bd3:-1.2s" transform="translate(25,-8)" fill="#FFB3D1">
+      <rect x="-.5" y="-2" width="1" height="4"/><rect x="-2" y="-.5" width="4" height="1"/>
+    </g>
+
+    <!-- magpie -->
+    <g class="qx-mag" transform="translate(16,-13)" fill="#222">
+      <ellipse cx="0" cy="0" rx="1.4" ry="1" />
+      <rect x="1" y="-.4" width="1.6" height=".8" rx=".3"/>
+      <g class="qx-wing"><polygon points="-1,-.4 -3,-1.4 -2.4,.6"/></g>
+      <rect x="-2.4" y="-.2" width="2" height=".5" fill="#222"/>
+    </g>
+
+    <!-- floating heart above -->
+    <g class="qx-heart" transform="translate(6,-22)" fill="#FF6B9D">
+      <rect x="0" y="0" width="1.2" height="1.2"/><rect x="1.8" y="0" width="1.2" height="1.2"/>
+      <rect x="0" y=".9" width="3" height="1.2"/><rect x=".7" y="2" width="1.6" height=".9"/><rect x="1.2" y="2.7" width=".6" height=".6"/>
+    </g>
+
+    <rect class="qx-shad" x="3" y="15" width="9" height="1" fill="#000" opacity=".5"/>
+    <g class="qx-body">
+      <g fill="#DE886D">
+        <rect x="3" y="13" width="1" height="2"/><rect x="5" y="13" width="1" height="2"/>
+        <rect x="9" y="13" width="1" height="2"/><rect x="11" y="13" width="1" height="2"/>
+      </g>
+      <rect x="2" y="6" width="11" height="7" fill="#DE886D"/>
+      <rect x="0" y="9" width="2" height="2" fill="#DE886D"/>
+      <rect x="13" y="9" width="2" height="2" fill="#DE886D"/>
+      <g class="qx-eye" fill="#000"><rect x="4" y="8" width="1" height="2"/><rect x="10" y="8" width="1" height="2"/></g>
+    </g>
+    </svg>
+  </div>
+  <div class="card-info">
+    <div class="card-emoji">🌌</div><div class="card-name">七夕快乐</div>
+    <div class="card-desc">仰望星河 · 喜鹊飞渡鹊桥<br>牛郎织女双星 · 银河心动</div>
+    <div class="tag">七夕 · Qixi</div>
+  </div>
+</div>
+
+</div><!-- /grid -->
+
+<p style="color:#2a2a2a;font-size:.7rem;padding-bottom:8px">纯 SVG + CSS · 像素风格参考 clawd-on-desk · 节日原创动画</p>
+
+</body>
+</html>
