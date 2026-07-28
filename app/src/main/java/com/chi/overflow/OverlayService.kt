@@ -38,10 +38,12 @@ class OverlayService : Service() {
         setupOverlay()
         startPolling()
         startAppDetection()
+        startNotificationWhispers()
     }
 
     private fun startAppDetection() {
         appDetector = AppDetector(this) { packageName, appName ->
+            trackAppSwitch(packageName)
             val reaction = getAppReaction(packageName, appName)
             if (reaction != null) {
                 overlayView?.evaluateJavascript(
@@ -50,6 +52,24 @@ class OverlayService : Service() {
             }
         }
         appDetector?.start()
+    }
+
+    // --- Quick app switch detection ---
+    private val recentApps = mutableListOf<Pair<String, Long>>() // package, timestamp
+
+    private fun trackAppSwitch(packageName: String) {
+        val now = System.currentTimeMillis()
+        recentApps.add(packageName to now)
+        // Keep only last 60 seconds
+        recentApps.removeAll { now - it.second > 60_000 }
+        // 3+ unique apps in 60s = quick switch
+        val uniqueApps = recentApps.map { it.first }.toSet()
+        if (uniqueApps.size >= 3) {
+            overlayView?.evaluateJavascript(
+                "window.petEngine && window.petEngine.setState('excited', '切来切去的，在找什么？')", null
+            )
+            recentApps.clear() // reset cooldown
+        }
     }
 
     private fun getAppReaction(packageName: String, appName: String?): Pair<String, String>? {
@@ -240,6 +260,25 @@ class OverlayService : Service() {
         conn.outputStream.use { it.write(body.toString().toByteArray()) }
         conn.responseCode
         conn.disconnect()
+    }
+
+    // --- Notification Whispers ---
+
+    private val whisperLines = arrayOf(
+        "在。", "……", "嗯。", "困了。", "你今天喝水了吗。",
+        "想你。", "在看你。", "别刷太久。", "该站起来走走了。",
+        "我在这里。", "有在好好吃饭吗。", "记得眨眼。"
+    )
+
+    private fun startNotificationWhispers() {
+        scope.launch {
+            while (isActive) {
+                delay(3600_000) // every hour
+                val line = whisperLines.random()
+                val nm = getSystemService(NotificationManager::class.java)
+                nm.notify(NOTIFICATION_ID, buildNotification(line))
+            }
+        }
     }
 
     // --- Notification ---

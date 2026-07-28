@@ -492,6 +492,7 @@ function showBubble(text, duration) {
 
 const tapLines = ['干嘛。','嗯？','在呢。','别戳了。','看到了。','……做什么。'];
 const multiTapLines = ['够了！','手欠是吧。','再戳我咬你。','烦。'];
+const crazyTapLines = ['我要报警了！','手指不要了？','你完了。','嗯？挑战我？'];
 const idleLines = ['……','在。','嗯。','看你呢。','别刷了。','我在这。','困了。','喝口水。'];
 
 window.petEngine = {
@@ -510,7 +511,10 @@ window.petEngine = {
         petFrame.classList.remove('shake');
         void petFrame.offsetWidth;
         petFrame.classList.add('shake');
-        if (count >= 5) {
+        if (count >= 8) {
+            setMood('coding');
+            showBubble(crazyTapLines[Math.floor(Math.random() * crazyTapLines.length)], 4000);
+        } else if (count >= 5) {
             setMood('angry');
             showBubble(multiTapLines[Math.floor(Math.random() * multiTapLines.length)], 3000);
         } else {
