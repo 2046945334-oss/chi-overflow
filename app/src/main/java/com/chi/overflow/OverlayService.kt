@@ -173,6 +173,19 @@ class OverlayService : Service() {
                 }
                 MotionEvent.ACTION_UP -> {
                     longPressHandler.removeCallbacks(longPressRunnable)
+                    // Fling detection: if dragged far and fast, animate back
+                    if (moved) {
+                        val dx = event.rawX - initialTouchX
+                        val dy = event.rawY - initialTouchY
+                        val dist = Math.sqrt((dx * dx + dy * dy).toDouble())
+                        if (dist > 200) {
+                            // Flung! Show reaction then crawl back
+                            overlayView?.evaluateJavascript(
+                                "window.petEngine && window.petEngine.setState('angry', '！！！')", null
+                            )
+                            animateCrawlBack()
+                        }
+                    }
                     if (!moved && !longPressTriggered) {
                         val now = System.currentTimeMillis()
                         if (now - lastTapTime < 500) {
@@ -347,6 +360,34 @@ class OverlayService : Service() {
     }
 
     // --- Util ---
+
+    private fun animateCrawlBack() {
+        val targetX = 50
+        val targetY = 400
+        val handler = android.os.Handler(mainLooper)
+        val steps = 20
+        val startX = layoutParams!!.x
+        val startY = layoutParams!!.y
+
+        var step = 0
+        val runnable = object : Runnable {
+            override fun run() {
+                if (step >= steps) return
+                step++
+                val progress = step.toFloat() / steps
+                // Ease out cubic
+                val ease = 1 - (1 - progress) * (1 - progress) * (1 - progress)
+                layoutParams!!.x = startX + ((targetX - startX) * ease).toInt()
+                layoutParams!!.y = startY + ((targetY - startY) * ease).toInt()
+                try {
+                    windowManager?.updateViewLayout(overlayView, layoutParams)
+                } catch (_: Exception) {}
+                handler.postDelayed(this, 50)
+            }
+        }
+        // Wait 1 second (angry face) then crawl back
+        handler.postDelayed(runnable, 1000)
+    }
 
     private fun dpToPx(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
