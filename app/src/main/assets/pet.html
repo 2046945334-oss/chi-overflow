@@ -1037,6 +1037,8 @@ const multiTapLines = ['够了！','手欠是吧。','再戳我咬你。','烦�
 const crazyTapLines = ['我要报警了！','手指不要了？','你完了。','嗯？挑战我？'];
 const idleLines = ['……','在。','嗯。','看你呢。','别刷了。','我在这。','困了。','喝口水。'];
 
+let moodLock = false; // When true, app detection setState is ignored
+
 window.petEngine = {
     onTap: function() {
         petFrame.classList.remove('bounce');
@@ -1067,12 +1069,15 @@ window.petEngine = {
     },
     onStateUpdate: function(states) {
         if (!Array.isArray(states) || states.length === 0) return;
+        moodLock = true; // Remote push takes priority, lock app detection
         for (const s of states) {
             if (s.state_key === 'mood') setMood(s.state_value);
             if (s.state_key === 'speech_bubble') showBubble(s.state_value, 5000);
         }
+        setTimeout(() => { moodLock = false; }, 10000);
     },
     setState: function(mood, text) {
+        if (moodLock) return; // Don't override during special emotes
         setMood(mood);
         if (text) showBubble(text, 5000);
     }
@@ -1085,8 +1090,9 @@ setInterval(() => {
         if (Math.random() < 0.15) {
             // Switch to a random fun emote briefly
             const rm = randomMoods[Math.floor(Math.random() * randomMoods.length)];
+            moodLock = true;
             setMood(rm);
-            setTimeout(() => setMood('idle'), 8000);
+            setTimeout(() => { setMood('idle'); moodLock = false; }, 8000);
         } else if (Math.random() < 0.3) {
             showBubble(idleLines[Math.floor(Math.random() * idleLines.length)], 3000);
         }
