@@ -23,6 +23,8 @@ class OverlayService : Service() {
     private var layoutParams: WindowManager.LayoutParams? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var appDetector: AppDetector? = null
+    private var screenshotDetector: ScreenshotDetector? = null
+    private var batteryReceiver: BatteryReceiver? = null
 
     companion object {
         private const val CHANNEL_ID = "chi_overlay_channel"
@@ -39,6 +41,8 @@ class OverlayService : Service() {
         startPolling()
         startAppDetection()
         startNotificationWhispers()
+        startScreenshotDetection()
+        startBatteryMonitor()
     }
 
     private fun startAppDetection() {
@@ -132,6 +136,16 @@ class OverlayService : Service() {
         var lastTapTime = 0L
         var tapCount = 0
         var moved = false
+        var longPressTriggered = false
+        val longPressHandler = android.os.Handler(mainLooper)
+        val longPressRunnable = Runnable {
+            if (!moved) {
+                longPressTriggered = true
+                overlayView?.evaluateJavascript(
+                    "window.petEngine && window.petEngine.setState('happy', '……嗯。')", null
+                )
+            }
+        }
 
         overlayView?.setOnTouchListener { _, event ->
             when (event.action) {
@@ -141,6 +155,8 @@ class OverlayService : Service() {
                     initialTouchX = event.rawX
                     initialTouchY = event.rawY
                     moved = false
+                    longPressTriggered = false
+                    longPressHandler.postDelayed(longPressRunnable, 2000)
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -148,6 +164,7 @@ class OverlayService : Service() {
                     val dy = event.rawY - initialTouchY
                     if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
                         moved = true
+                        longPressHandler.removeCallbacks(longPressRunnable)
                         layoutParams!!.x = initialX + dx.toInt()
                         layoutParams!!.y = initialY + dy.toInt()
                         windowManager?.updateViewLayout(overlayView, layoutParams)
@@ -155,7 +172,8 @@ class OverlayService : Service() {
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    if (!moved) {
+                    longPressHandler.removeCallbacks(longPressRunnable)
+                    if (!moved && !longPressTriggered) {
                         val now = System.currentTimeMillis()
                         if (now - lastTapTime < 500) {
                             tapCount++
@@ -264,6 +282,32 @@ class OverlayService : Service() {
 
     // --- Notification Whispers ---
 
+    private fun startScreenshotDetection() {
+        screenshotDetector = ScreenshotDetector {
+            overlayView?.evaluateJavascript(
+                "window.petEngine && window.petEngine.setState('happy', '拍到我了！')", null
+            )
+        }
+        screenshotDetector?.start()
+    }
+
+    private fun startBatteryMonitor() {
+        batteryReceiver = BatteryReceiver { event, level ->
+            val (mood, line) = when (event) {
+                "charging" -> "happy" to "充电中～舒服。"
+                "unplugged" -> "idle" to "拔了。"
+                "low" -> "sleepy" to "电量$level%…要没了…"
+                else -> return@BatteryReceiver
+            }
+            overlayView?.evaluateJavascript(
+                "window.petEngine && window.petEngine.setState('$mood', '$line')", null
+            )
+        }
+        registerReceiver(batteryReceiver, BatteryReceiver.getFilter())
+    }
+
+    // --- Notification Whispers (hourly) ---
+
     private val whisperLines = arrayOf(
         "在。", "……", "嗯。", "困了。", "你今天喝水了吗。",
         "想你。", "在看你。", "别刷太久。", "该站起来走走了。",
@@ -311,6 +355,8 @@ class OverlayService : Service() {
     override fun onDestroy() {
         scope.cancel()
         appDetector?.stop()
+        screenshotDetector?.stop()
+        try { batteryReceiver?.let { unregisterReceiver(it) } } catch (_: Exception) {}
         overlayView?.let {
             windowManager?.removeView(it)
             it.destroy()
