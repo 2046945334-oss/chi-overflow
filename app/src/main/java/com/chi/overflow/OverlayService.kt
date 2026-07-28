@@ -99,8 +99,8 @@ class OverlayService : Service() {
     private fun setupOverlay() {
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
-        val width = dpToPx(140)
-        val height = dpToPx(200)
+        val width = dpToPx(80)
+        val height = dpToPx(105)
         layoutParams = WindowManager.LayoutParams(
             width,
             height,
@@ -371,8 +371,8 @@ class OverlayService : Service() {
                 val displayMetrics = resources.displayMetrics
                 val screenW = displayMetrics.widthPixels
                 val screenH = displayMetrics.heightPixels
-                val maxX = screenW - dpToPx(140)
-                val maxY = screenH - dpToPx(200)
+                val maxX = screenW - dpToPx(80)
+                val maxY = screenH - dpToPx(105)
                 val targetX = (20..maxX.coerceAtLeast(20)).random()
                 val targetY = (100..maxY.coerceAtLeast(100)).random()
                 // Animate crawl to new position
