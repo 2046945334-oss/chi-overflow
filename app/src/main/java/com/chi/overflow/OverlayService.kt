@@ -43,6 +43,7 @@ class OverlayService : Service() {
         startNotificationWhispers()
         startScreenshotDetection()
         startBatteryMonitor()
+        startRandomCrawl()
     }
 
     private fun startAppDetection() {
@@ -357,6 +358,55 @@ class OverlayService : Service() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
+    }
+
+    // --- Random Crawl ---
+
+    private fun startRandomCrawl() {
+        scope.launch {
+            while (true) {
+                // Random interval: 45-120 seconds
+                delay((45_000L..120_000L).random())
+                // Random new position within screen bounds
+                val displayMetrics = resources.displayMetrics
+                val screenW = displayMetrics.widthPixels
+                val screenH = displayMetrics.heightPixels
+                val maxX = screenW - dpToPx(140)
+                val maxY = screenH - dpToPx(200)
+                val targetX = (20..maxX.coerceAtLeast(20)).random()
+                val targetY = (100..maxY.coerceAtLeast(100)).random()
+                // Animate crawl to new position
+                withContext(Dispatchers.Main) {
+                    animateCrawlTo(targetX, targetY)
+                }
+            }
+        }
+    }
+
+    private fun animateCrawlTo(targetX: Int, targetY: Int) {
+        val handler = android.os.Handler(mainLooper)
+        val steps = 30
+        val startX = layoutParams!!.x
+        val startY = layoutParams!!.y
+
+        var step = 0
+        val runnable = object : Runnable {
+            override fun run() {
+                if (step >= steps) return
+                step++
+                val progress = step.toFloat() / steps
+                // Ease in-out quad
+                val ease = if (progress < 0.5f) 2 * progress * progress
+                           else 1 - (-2 * progress + 2).let { it * it } / 2
+                layoutParams!!.x = (startX + (targetX - startX) * ease).toInt()
+                layoutParams!!.y = (startY + (targetY - startY) * ease).toInt()
+                try {
+                    windowManager?.updateViewLayout(overlayView, layoutParams)
+                } catch (_: Exception) {}
+                handler.postDelayed(this, 25)
+            }
+        }
+        handler.post(runnable)
     }
 
     // --- Util ---
