@@ -1085,8 +1085,9 @@ window.petEngine = {
 
 // Random idle chatter + random emote switch
 const randomMoods = ['guitar', 'exercise', 'painting', 'photo', 'singing', 'spring'];
+const appMoods = ['reading', 'gaming', 'coffee', 'coding', 'idle'];
 setInterval(() => {
-    if (currentMood === 'idle') {
+    if (appMoods.includes(currentMood)) {
         if (Math.random() < 0.15) {
             // Switch to a random fun emote briefly
             const rm = randomMoods[Math.floor(Math.random() * randomMoods.length)];
