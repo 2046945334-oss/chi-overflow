@@ -505,6 +505,7 @@ window.petEngine = {
     onDoubleTap: function() {
         setMood('happy');
         showBubble('♡', 2000);
+        spawnHearts();
         setTimeout(() => setMood('idle'), 3000);
     },
     onMultiTap: function(count) {
@@ -613,6 +614,55 @@ setInterval(() => {
         setTimeout(() => setMood('idle'), 6000);
     }
 }, 1800000); // every 30 min
+
+// ═══ 爱心粒子 ═══
+function spawnHearts() {
+    const container = document.querySelector('.container');
+    for (let i = 0; i < 6; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = '♥';
+        heart.style.cssText = `
+            position: absolute;
+            font-size: ${8 + Math.random() * 8}px;
+            color: hsl(${340 + Math.random() * 30}, 80%, 60%);
+            pointer-events: none;
+            bottom: 60px;
+            left: ${40 + Math.random() * 60}px;
+            opacity: 1;
+            transition: all ${1 + Math.random()}s ease-out;
+        `;
+        container.appendChild(heart);
+        requestAnimationFrame(() => {
+            heart.style.transform = `translateY(-${40 + Math.random() * 60}px) translateX(${-20 + Math.random() * 40}px)`;
+            heart.style.opacity = '0';
+        });
+        setTimeout(() => heart.remove(), 2000);
+    }
+}
+
+// ═══ 喝水提醒 ═══
+let waterRemindCount = 0;
+setInterval(() => {
+    waterRemindCount++;
+    const lines = [
+        '喝水。',
+        '说了喝水。',
+        '你是不是没听到？喝水。',
+        '我生气了。喝水。',
+        '最后一次说。喝。水。'
+    ];
+    const idx = Math.min(waterRemindCount - 1, lines.length - 1);
+    setMood(waterRemindCount >= 3 ? 'angry' : 'coffee');
+    showBubble(lines[idx], 5000);
+    setTimeout(() => setMood('idle'), 6000);
+}, 7200000); // every 2 hours
+
+// Reset water remind when tapped (means they saw it)
+const origTapForWater = window.petEngine.onTap;
+window.petEngine.onTap = function() {
+    waterRemindCount = 0;
+    origTapForWater();
+};
 </script>
 </body>
 </html>
