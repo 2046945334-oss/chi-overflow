@@ -1415,8 +1415,6 @@ document.getElementById('btn-close').addEventListener('click', (e) => {
     e.stopPropagation();
     careMenu.classList.remove('show');
     setTimeout(() => statBars.classList.remove('show'), 3000);
-    // 通知Kotlin缩小悬浮窗
-    if (window.PetBridge) window.PetBridge.shrinkWindow();
 });
 
 document.getElementById('btn-feed').addEventListener('click', (e) => {
@@ -1425,9 +1423,9 @@ document.getElementById('btn-feed').addEventListener('click', (e) => {
     careData.intimacy += 1;
     updateBars(); saveCare();
     careMenu.classList.remove('show');
-    setMood('eating');
+    setMood('happy');
     showBubble('好吃！', 2500);
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
 });
 
 document.getElementById('btn-wash').addEventListener('click', (e) => {
@@ -1438,7 +1436,7 @@ document.getElementById('btn-wash').addEventListener('click', (e) => {
     careMenu.classList.remove('show');
     setMood('shower');
     showBubble('舒服～', 2500);
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
 });
 
 document.getElementById('btn-play').addEventListener('click', (e) => {
@@ -1447,10 +1445,10 @@ document.getElementById('btn-play').addEventListener('click', (e) => {
     careData.intimacy += 2;
     updateBars(); saveCare();
     careMenu.classList.remove('show');
-    setMood('gaming');
+    setMood('happy');
     showBubble('开心！', 2500);
     spawnHearts();
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
 });
 
 // --- 亲密度影响 ---
