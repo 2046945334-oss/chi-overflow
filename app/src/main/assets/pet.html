@@ -89,15 +89,16 @@ html, body {
 /* 状态条 */
 .stat-bar-wrap {
     position: absolute;
-    top: -90px; left: 50%;
+    top: 2px; left: 50%;
     transform: translateX(-50%);
     display: flex; gap: 3px;
     background: rgba(250,248,245,0.92);
     border: 1px solid #e8e4de;
     border-radius: 10px;
     padding: 4px 8px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s;
+    z-index: 200;
 }
 .stat-bar-wrap.show { opacity: 1; }
 .stat-item { display: flex; align-items: center; gap: 2px; }
@@ -1150,6 +1151,16 @@ window.petEngine = {
         for (const s of states) {
             if (s.state_key === 'mood') setMood(s.state_value);
             if (s.state_key === 'speech_bubble') showBubble(s.state_value, 5000);
+            if (s.state_key === 'care') {
+                try {
+                    const c = typeof s.state_value === 'string' ? JSON.parse(s.state_value) : s.state_value;
+                    if (c.hunger) careData.hunger = Math.max(0, Math.min(100, careData.hunger + c.hunger));
+                    if (c.clean) careData.clean = Math.max(0, Math.min(100, careData.clean + c.clean));
+                    if (c.mood) careData.mood = Math.max(0, Math.min(100, careData.mood + c.mood));
+                    if (c.intimacy) careData.intimacy += c.intimacy;
+                    updateBars(); saveCare();
+                } catch(e) {}
+            }
         }
         setTimeout(() => { moodLock = false; }, 10000);
     },
