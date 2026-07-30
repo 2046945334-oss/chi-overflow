@@ -170,7 +170,7 @@ longPressTriggered = true
 menuVisible = true
 expandWindow()
 overlayView?.evaluateJavascript(
-"document.getElementById('careMenu').classList.add('show');", null
+"document.getElementById('careMenu').classList.add('show'); document.getElementById('statBars').classList.add('show');", null
 )
 }
 }
