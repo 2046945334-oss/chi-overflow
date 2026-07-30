@@ -1423,7 +1423,7 @@ document.getElementById('btn-feed').addEventListener('click', (e) => {
     careData.intimacy += 1;
     updateBars(); saveCare();
     careMenu.classList.remove('show');
-    setMood('happy');
+    setMood('angry');
     showBubble('好吃！', 2500);
     setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
 });
@@ -1445,7 +1445,8 @@ document.getElementById('btn-play').addEventListener('click', (e) => {
     careData.intimacy += 2;
     updateBars(); saveCare();
     careMenu.classList.remove('show');
-    setMood('happy');
+    const playMoods = ['exercise', 'guitar', 'photo', 'singing'];
+    setMood(playMoods[Math.floor(Math.random() * playMoods.length)]);
     showBubble('开心！', 2500);
     spawnHearts();
     setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
