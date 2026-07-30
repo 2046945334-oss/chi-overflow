@@ -183,17 +183,7 @@ overlayView?.evaluateJavascript(
 }
 }
 
-        overlayView?.setOnTouchListener { v, event ->
-            // 菜单模式下让WebView处理触摸（点击按钮）
-            if (longPressTriggered) {
-                when (event.action) {
-                    MotionEvent.ACTION_UP -> {
-                        v.performClick()
-                    }
-                }
-                // 传递事件给WebView内部处理
-                return@setOnTouchListener false
-            }
+        overlayView?.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     initialX = layoutParams!!.x
@@ -249,7 +239,18 @@ if (!moved && !longPressTriggered) {
                          logGesture(if (tapCount == 1) "tap" else "multi_tap_$tapCount")
                      }
                      if (longPressTriggered) {
-                         // 菜单模式结束，由WebView的按钮click处理
+                         // 菜单模式下，tap根据y位置选操作
+                         val tapY = event.y
+                         val viewHeight = overlayView?.height ?: 300
+                         val relY = tapY / viewHeight
+                         val js = if (relY < 0.33) {
+                             "document.getElementById('btn-feed').click()"
+                         } else if (relY < 0.66) {
+                             "document.getElementById('btn-wash').click()"
+                         } else {
+                             "document.getElementById('btn-play').click()"
+                         }
+                         overlayView?.evaluateJavascript(js, null)
                          longPressTriggered = false
                      }
                     true
