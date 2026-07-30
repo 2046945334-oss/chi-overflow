@@ -239,15 +239,24 @@ if (!moved && !longPressTriggered) {
                          // 长按刚触发的松手，不做任何操作
                          longPressTriggered = false
                      } else if (menuVisible) {
-                         // 菜单模式下，tap根据y位置选操作
+                         // 环形菜单：根据x,y位置选操作
+                         val tapX = event.x
                          val tapY = event.y
+                         val viewWidth = overlayView?.width ?: 300
                          val viewHeight = overlayView?.height ?: 300
+                         val relX = tapX / viewWidth
                          val relY = tapY / viewHeight
-                         val js = if (relY < 0.33) {
+                         val js = if (relY < 0.30) {
+                             // 顶部=喂食
                              "document.getElementById('btn-feed').click()"
-                         } else if (relY < 0.66) {
+                         } else if (relY > 0.70) {
+                             // 底部=关闭
+                             "document.getElementById('btn-close').click()"
+                         } else if (relX < 0.50) {
+                             // 左侧=洗澡
                              "document.getElementById('btn-wash').click()"
                          } else {
+                             // 右侧=玩耍
                              "document.getElementById('btn-play').click()"
                          }
                          overlayView?.evaluateJavascript(js, null)
