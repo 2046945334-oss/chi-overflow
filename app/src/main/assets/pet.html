@@ -135,6 +135,7 @@ html, body {
         <div class="stat-item"><span class="stat-icon">🍖</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-hunger" style="width:100%"></div></div></div>
         <div class="stat-item"><span class="stat-icon">✨</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-clean" style="width:100%"></div></div></div>
         <div class="stat-item"><span class="stat-icon">😊</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-mood" style="width:100%"></div></div></div>
+        <div class="stat-item"><span class="stat-icon">♡</span><span id="intimacy-num" style="font-size:7px;color:#e8a0b0;">0</span></div>
     </div>
     <!-- 养成菜单 -->
     <div class="care-menu" id="careMenu">
@@ -1348,6 +1349,8 @@ function updateBars() {
     updateBar('bar-hunger', careData.hunger);
     updateBar('bar-clean', careData.clean);
     updateBar('bar-mood', careData.mood);
+    const el = document.getElementById('intimacy-num');
+    if (el) el.textContent = careData.intimacy;
 }
 function updateBar(id, val) {
     const el = document.getElementById(id);
