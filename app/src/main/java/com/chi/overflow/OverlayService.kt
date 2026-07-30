@@ -121,11 +121,45 @@ class OverlayService : Service() {
             settings.useWideViewPort = true
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient()
+            addJavascriptInterface(PetBridge(), "PetBridge")
             loadUrl("file:///android_asset/pet.html")
         }
 
         setupTouchListener()
         windowManager?.addView(overlayView, layoutParams)
+    }
+
+    private val normalWidth = dpToPx(90)
+    private val normalHeight = dpToPx(160)
+    private val expandedWidth = dpToPx(220)
+    private val expandedHeight = dpToPx(260)
+
+    private fun expandWindow() {
+        layoutParams?.let { lp ->
+            // 居中扩展：向左上偏移差值的一半
+            lp.x -= (expandedWidth - normalWidth) / 2
+            lp.y -= (expandedHeight - normalHeight) / 2
+            lp.width = expandedWidth
+            lp.height = expandedHeight
+            windowManager?.updateViewLayout(overlayView, lp)
+        }
+    }
+
+    private fun shrinkWindow() {
+        layoutParams?.let { lp ->
+            lp.x += (expandedWidth - normalWidth) / 2
+            lp.y += (expandedHeight - normalHeight) / 2
+            lp.width = normalWidth
+            lp.height = normalHeight
+            windowManager?.updateViewLayout(overlayView, lp)
+        }
+    }
+
+    inner class PetBridge {
+        @android.webkit.JavascriptInterface
+        fun shrinkWindow() {
+            android.os.Handler(mainLooper).post { this@OverlayService.shrinkWindow() }
+        }
     }
 
     @SuppressLint("ClickableAccessibility")
@@ -142,13 +176,24 @@ class OverlayService : Service() {
         val longPressRunnable = Runnable {
 if (!moved) {
 longPressTriggered = true
+expandWindow()
 overlayView?.evaluateJavascript(
 "document.getElementById('careMenu').classList.add('show'); document.getElementById('statBars').classList.add('show');", null
 )
 }
 }
 
-        overlayView?.setOnTouchListener { _, event ->
+        overlayView?.setOnTouchListener { v, event ->
+            // 菜单模式下让WebView处理触摸（点击按钮）
+            if (longPressTriggered) {
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        v.performClick()
+                    }
+                }
+                // 传递事件给WebView内部处理
+                return@setOnTouchListener false
+            }
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     initialX = layoutParams!!.x
@@ -204,21 +249,7 @@ if (!moved && !longPressTriggered) {
                          logGesture(if (tapCount == 1) "tap" else "multi_tap_$tapCount")
                      }
                      if (longPressTriggered) {
-                         // 菜单模式下，tap根据y位置选操作
-                         val tapY = event.y
-                         val viewHeight = overlayView?.height ?: 300
-                         val relY = tapY / viewHeight
-                         val js = if (relY < 0.4) {
-                             // 点了上方=喂食
-                             "document.getElementById('btn-feed').click()"
-                         } else if (relY < 0.7) {
-                             // 中间=洗澡
-                             "document.getElementById('btn-wash').click()"
-                         } else {
-                             // 下方=玩耍
-                             "document.getElementById('btn-play').click()"
-                         }
-                         overlayView?.evaluateJavascript(js, null)
+                         // 菜单模式结束，由WebView的按钮click处理
                          longPressTriggered = false
                      }
                     true

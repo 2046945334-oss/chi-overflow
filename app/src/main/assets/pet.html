@@ -56,38 +56,46 @@ html, body {
 .care-menu {
     display: none;
     position: absolute;
-    bottom: 115px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255,255,255,0.95);
-    border-radius: 14px;
-    padding: 8px 6px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    gap: 4px;
-    flex-direction: row;
+    width: 0; height: 0;
     z-index: 100;
 }
-.care-menu.show { display: flex; }
+.care-menu.show { display: block; }
 .care-btn {
-    width: 40px; height: 40px;
-    border: none; background: #f5f5f5;
-    border-radius: 10px;
+    position: absolute;
+    width: 42px; height: 42px;
+    border: 1.5px solid #e0ddd8;
+    background: #faf8f5;
+    border-radius: 50%;
     font-size: 18px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    margin: 0 2px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s;
+    transform: scale(0);
+    opacity: 0;
 }
-.care-btn:active { background: #e0e0e0; transform: scale(0.9); }
+.care-menu.show .care-btn {
+    transform: scale(1);
+    opacity: 1;
+}
+.care-btn:active { transform: scale(0.85) !important; background: #f0ede8; }
+/* 环形位置：3个按钮 + 1个关闭 */
+#btn-feed { top: -70px; left: -21px; transition-delay: 0s; }
+#btn-wash { top: -20px; left: -70px; transition-delay: 0.05s; }
+#btn-play { top: -20px; left: 28px; transition-delay: 0.1s; }
+#btn-close { top: 20px; left: -21px; transition-delay: 0.15s; font-size: 14px; width: 34px; height: 34px; background: #f5f2ed; border-color: #d5d0c8; }
 /* 状态条 */
 .stat-bar-wrap {
     position: absolute;
-    top: 4px; left: 50%;
+    top: -90px; left: 50%;
     transform: translateX(-50%);
     display: flex; gap: 3px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 8px;
-    padding: 3px 6px;
+    background: rgba(250,248,245,0.92);
+    border: 1px solid #e8e4de;
+    border-radius: 10px;
+    padding: 4px 8px;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -96,7 +104,7 @@ html, body {
 .stat-icon { font-size: 9px; }
 .stat-fill-wrap {
     width: 22px; height: 5px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.06);
     border-radius: 3px;
     overflow: hidden;
 }
@@ -105,9 +113,9 @@ html, body {
     border-radius: 3px;
     transition: width 0.5s, background 0.3s;
 }
-.stat-fill.high { background: #4caf50; }
-.stat-fill.mid { background: #ff9800; }
-.stat-fill.low { background: #f44336; }
+.stat-fill.high { background: #7bc67e; }
+.stat-fill.mid { background: #e8a838; }
+.stat-fill.low { background: #e05555; }
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
@@ -132,6 +140,7 @@ html, body {
         <button class="care-btn" id="btn-feed" title="喂食">🍖</button>
         <button class="care-btn" id="btn-wash" title="洗澡">🛁</button>
         <button class="care-btn" id="btn-play" title="玩耍">🎾</button>
+        <button class="care-btn" id="btn-close" title="关闭">✕</button>
     </div>
     <div class="bubble" id="bubble"></div>
     <div class="pet-frame" id="petFrame">
@@ -1402,6 +1411,14 @@ document.addEventListener('touchstart', (e) => {
 }, { passive: true });
 
 // --- 菜单按钮 ---
+document.getElementById('btn-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    careMenu.classList.remove('show');
+    setTimeout(() => statBars.classList.remove('show'), 3000);
+    // 通知Kotlin缩小悬浮窗
+    if (window.PetBridge) window.PetBridge.shrinkWindow();
+});
+
 document.getElementById('btn-feed').addEventListener('click', (e) => {
     e.stopPropagation();
     careData.hunger = Math.min(100, careData.hunger + 30);
@@ -1410,7 +1427,7 @@ document.getElementById('btn-feed').addEventListener('click', (e) => {
     careMenu.classList.remove('show');
     setMood('eating');
     showBubble('好吃！', 2500);
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
 });
 
 document.getElementById('btn-wash').addEventListener('click', (e) => {
@@ -1421,7 +1438,7 @@ document.getElementById('btn-wash').addEventListener('click', (e) => {
     careMenu.classList.remove('show');
     setMood('shower');
     showBubble('舒服～', 2500);
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
 });
 
 document.getElementById('btn-play').addEventListener('click', (e) => {
@@ -1433,7 +1450,7 @@ document.getElementById('btn-play').addEventListener('click', (e) => {
     setMood('gaming');
     showBubble('开心！', 2500);
     spawnHearts();
-    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); if (window.PetBridge) window.PetBridge.shrinkWindow(); }, 3000);
 });
 
 // --- 亲密度影响 ---
