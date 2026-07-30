@@ -246,13 +246,13 @@ if (!moved && !longPressTriggered) {
                          val viewHeight = overlayView?.height ?: 300
                          val relX = tapX / viewWidth
                          val relY = tapY / viewHeight
-                         val js = if (relY < 0.30) {
-                             // 顶部=喂食
+                         val js = if (relY < 0.40) {
+                             // 上方=喂食
                              "document.getElementById('btn-feed').click()"
-                         } else if (relY > 0.70) {
+                         } else if (relY > 0.75) {
                              // 底部=关闭
                              "document.getElementById('btn-close').click()"
-                         } else if (relX < 0.50) {
+                         } else if (relX < 0.40) {
                              // 左侧=洗澡
                              "document.getElementById('btn-wash').click()"
                          } else {
