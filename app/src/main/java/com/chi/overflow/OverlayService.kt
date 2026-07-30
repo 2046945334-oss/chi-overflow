@@ -121,7 +121,6 @@ class OverlayService : Service() {
             settings.useWideViewPort = true
             webViewClient = WebViewClient()
             webChromeClient = WebChromeClient()
-            addJavascriptInterface(PetBridge(), "PetBridge")
             loadUrl("file:///android_asset/pet.html")
         }
 
@@ -129,38 +128,8 @@ class OverlayService : Service() {
         windowManager?.addView(overlayView, layoutParams)
     }
 
-    private val normalWidth = dpToPx(90)
-    private val normalHeight = dpToPx(160)
-    private val expandedWidth = dpToPx(220)
-    private val expandedHeight = dpToPx(260)
-
-    private fun expandWindow() {
-        layoutParams?.let { lp ->
-            // 居中扩展：向左上偏移差值的一半
-            lp.x -= (expandedWidth - normalWidth) / 2
-            lp.y -= (expandedHeight - normalHeight) / 2
-            lp.width = expandedWidth
-            lp.height = expandedHeight
-            windowManager?.updateViewLayout(overlayView, lp)
-        }
-    }
-
-    private fun shrinkWindow() {
-        layoutParams?.let { lp ->
-            lp.x += (expandedWidth - normalWidth) / 2
-            lp.y += (expandedHeight - normalHeight) / 2
-            lp.width = normalWidth
-            lp.height = normalHeight
-            windowManager?.updateViewLayout(overlayView, lp)
-        }
-    }
-
-    inner class PetBridge {
-        @android.webkit.JavascriptInterface
-        fun shrinkWindow() {
-            android.os.Handler(mainLooper).post { this@OverlayService.shrinkWindow() }
-        }
-    }
+    private fun expandWindow() {}
+    private fun shrinkWindow() {}
 
     @SuppressLint("ClickableAccessibility")
     private fun setupTouchListener() {
@@ -176,7 +145,6 @@ class OverlayService : Service() {
         val longPressRunnable = Runnable {
 if (!moved) {
 longPressTriggered = true
-expandWindow()
 overlayView?.evaluateJavascript(
 "document.getElementById('careMenu').classList.add('show'); document.getElementById('statBars').classList.add('show');", null
 )
