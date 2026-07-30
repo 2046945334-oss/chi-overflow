@@ -1108,7 +1108,10 @@ function showBubble(text, duration) {
     bubble.textContent = text;
     bubble.classList.add('show');
     clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(() => bubble.classList.remove('show'), duration || 3000);
+    if (duration > 0) {
+        bubbleTimer = setTimeout(() => bubble.classList.remove('show'), duration);
+    }
+    // duration === 0 时不自动消失，等点击清除
 }
 
 const tapLines = ['干嘛。','嗯？','在呢。','别戳了。','看到了。','……做什么。'];
@@ -1151,7 +1154,9 @@ window.petEngine = {
         moodLock = true; // Remote push takes priority, lock app detection
         for (const s of states) {
             if (s.state_key === 'mood') setMood(s.state_value);
-            if (s.state_key === 'speech_bubble') showBubble(s.state_value, 5000);
+            if (s.state_key === 'speech_bubble') {
+                showBubble(s.state_value, 0); // 0 = 不自动消失，等点击清除
+            }
             if (s.state_key === 'care') {
                 try {
                     const c = typeof s.state_value === 'string' ? JSON.parse(s.state_value) : s.state_value;
