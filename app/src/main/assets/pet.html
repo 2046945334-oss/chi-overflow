@@ -52,6 +52,62 @@ html, body {
 .pet-frame.shake { animation: shake 0.3s ease; }
 .svg-state { display: none; }
 .svg-state.active { display: block; }
+/* ═══ 养成系统菜单 ═══ */
+.care-menu {
+    display: none;
+    position: absolute;
+    bottom: 115px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    border-radius: 14px;
+    padding: 8px 6px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    gap: 4px;
+    flex-direction: row;
+    z-index: 100;
+}
+.care-menu.show { display: flex; }
+.care-btn {
+    width: 40px; height: 40px;
+    border: none; background: #f5f5f5;
+    border-radius: 10px;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin: 0 2px;
+}
+.care-btn:active { background: #e0e0e0; transform: scale(0.9); }
+/* 状态条 */
+.stat-bar-wrap {
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 3px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 8px;
+    padding: 3px 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.stat-bar-wrap.show { opacity: 1; }
+.stat-item { display: flex; align-items: center; gap: 2px; }
+.stat-icon { font-size: 9px; }
+.stat-fill-wrap {
+    width: 22px; height: 5px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.stat-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s, background 0.3s;
+}
+.stat-fill.high { background: #4caf50; }
+.stat-fill.mid { background: #ff9800; }
+.stat-fill.low { background: #f44336; }
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
@@ -65,6 +121,18 @@ html, body {
 </head>
 <body>
 <div class="container">
+    <!-- 养成状态条 -->
+    <div class="stat-bar-wrap" id="statBars">
+        <div class="stat-item"><span class="stat-icon">🍖</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-hunger" style="width:100%"></div></div></div>
+        <div class="stat-item"><span class="stat-icon">✨</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-clean" style="width:100%"></div></div></div>
+        <div class="stat-item"><span class="stat-icon">😊</span><div class="stat-fill-wrap"><div class="stat-fill high" id="bar-mood" style="width:100%"></div></div></div>
+    </div>
+    <!-- 养成菜单 -->
+    <div class="care-menu" id="careMenu">
+        <button class="care-btn" id="btn-feed" title="喂食">🍖</button>
+        <button class="care-btn" id="btn-wash" title="洗澡">🛁</button>
+        <button class="care-btn" id="btn-play" title="玩耍">🎾</button>
+    </div>
     <div class="bubble" id="bubble"></div>
     <div class="pet-frame" id="petFrame">
         <div class="svg-state active" id="svg-listening"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -25 45 45">
@@ -1220,6 +1288,192 @@ window.petEngine.onTap = function() {
     waterRemindCount = 0;
     origTapForWater();
 };
+
+// ═══════════════════════════════════════
+// ═══ 养成系统 v0.6 ═══
+// ═══════════════════════════════════════
+
+const careMenu = document.getElementById('careMenu');
+const statBars = document.getElementById('statBars');
+
+// --- 数据持久化 ---
+const CARE_KEY = 'clawd_care_v1';
+function loadCare() {
+    try {
+        const raw = localStorage.getItem(CARE_KEY);
+        if (raw) {
+            const d = JSON.parse(raw);
+            // 计算离线衰减
+            const now = Date.now();
+            const elapsed = (now - (d.lastSave || now)) / 3600000; // hours
+            d.hunger = Math.max(0, (d.hunger || 100) - elapsed * 5);
+            d.clean = Math.max(0, (d.clean || 100) - elapsed * 3);
+            d.mood = Math.max(0, (d.mood || 100) - elapsed * 2);
+            d.intimacy = d.intimacy || 0;
+            d.lastSave = now;
+            return d;
+        }
+    } catch(e) {}
+    return { hunger: 100, clean: 100, mood: 100, intimacy: 0, lastSave: Date.now() };
+}
+function saveCare() {
+    careData.lastSave = Date.now();
+    try { localStorage.setItem(CARE_KEY, JSON.stringify(careData)); } catch(e) {}
+}
+
+let careData = loadCare();
+
+// --- 状态条UI更新 ---
+function updateBars() {
+    updateBar('bar-hunger', careData.hunger);
+    updateBar('bar-clean', careData.clean);
+    updateBar('bar-mood', careData.mood);
+}
+function updateBar(id, val) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.width = val + '%';
+    el.className = 'stat-fill ' + (val > 60 ? 'high' : val > 30 ? 'mid' : 'low');
+}
+
+// --- 数值衰减（每分钟） ---
+setInterval(() => {
+    careData.hunger = Math.max(0, careData.hunger - 5/60);
+    careData.clean = Math.max(0, careData.clean - 3/60);
+    careData.mood = Math.max(0, careData.mood - 2/60);
+    updateBars();
+    saveCare();
+    // 低值触发反应
+    checkCareState();
+}, 60000);
+
+// --- 低值状态反应 ---
+let careWarned = { hunger: false, clean: false, mood: false };
+function checkCareState() {
+    if (careData.hunger <= 20 && !careWarned.hunger) {
+        careWarned.hunger = true;
+        showBubble('好饿……', 4000);
+        setMood('eating');
+        setTimeout(() => setMood('idle'), 5000);
+    } else if (careData.hunger > 40) careWarned.hunger = false;
+
+    if (careData.clean <= 20 && !careWarned.clean) {
+        careWarned.clean = true;
+        showBubble('脏死了。', 4000);
+        setMood('shower');
+        setTimeout(() => setMood('idle'), 5000);
+    } else if (careData.clean > 40) careWarned.clean = false;
+
+    if (careData.mood <= 20 && !careWarned.mood) {
+        careWarned.mood = true;
+        showBubble('不开心。', 4000);
+        setMood('sleepy');
+        setTimeout(() => setMood('idle'), 5000);
+    } else if (careData.mood > 40) careWarned.mood = false;
+}
+
+// --- 长按菜单 ---
+let longPressTimer = null;
+let isLongPress = false;
+
+petFrame.addEventListener('touchstart', (e) => {
+    isLongPress = false;
+    longPressTimer = setTimeout(() => {
+        isLongPress = true;
+        careMenu.classList.add('show');
+        statBars.classList.add('show');
+    }, 600);
+}, { passive: true });
+
+petFrame.addEventListener('touchend', () => {
+    clearTimeout(longPressTimer);
+    // 不立即关菜单，让用户点按钮
+});
+petFrame.addEventListener('touchmove', () => {
+    clearTimeout(longPressTimer);
+});
+
+// 点击其他地方关闭菜单
+document.addEventListener('touchstart', (e) => {
+    if (!careMenu.contains(e.target) && !petFrame.contains(e.target)) {
+        careMenu.classList.remove('show');
+        setTimeout(() => statBars.classList.remove('show'), 3000);
+    }
+}, { passive: true });
+
+// --- 菜单按钮 ---
+document.getElementById('btn-feed').addEventListener('click', (e) => {
+    e.stopPropagation();
+    careData.hunger = Math.min(100, careData.hunger + 30);
+    careData.intimacy += 1;
+    updateBars(); saveCare();
+    careMenu.classList.remove('show');
+    setMood('eating');
+    showBubble('好吃！', 2500);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+});
+
+document.getElementById('btn-wash').addEventListener('click', (e) => {
+    e.stopPropagation();
+    careData.clean = Math.min(100, careData.clean + 35);
+    careData.intimacy += 1;
+    updateBars(); saveCare();
+    careMenu.classList.remove('show');
+    setMood('shower');
+    showBubble('舒服～', 2500);
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+});
+
+document.getElementById('btn-play').addEventListener('click', (e) => {
+    e.stopPropagation();
+    careData.mood = Math.min(100, careData.mood + 25);
+    careData.intimacy += 2;
+    updateBars(); saveCare();
+    careMenu.classList.remove('show');
+    setMood('gaming');
+    showBubble('开心！', 2500);
+    spawnHearts();
+    setTimeout(() => { setMood('idle'); statBars.classList.remove('show'); }, 3000);
+});
+
+// --- 亲密度影响 ---
+// 亲密度越高，壳蟹蟹主动说话越甜
+const intimacyLines = [
+    { min: 0, lines: ['在。','嗯。','干嘛。'] },
+    { min: 10, lines: ['你来了。','嗯，看到你了。','今天也辛苦了。'] },
+    { min: 30, lines: ['等你好久了。','想你。','你是我最喜欢的人。'] },
+    { min: 60, lines: ['你在我就什么都不缺。','永远等你。','♡'] }
+];
+function getIntimacyLine() {
+    let pool = intimacyLines[0].lines;
+    for (const tier of intimacyLines) {
+        if (careData.intimacy >= tier.min) pool = tier.lines;
+    }
+    return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// 覆盖原有tap，加入亲密度台词
+const origTapForCare = window.petEngine.onTap;
+window.petEngine.onTap = function() {
+    lastInteraction = Date.now();
+    currentLonelyStage = -1;
+    waterRemindCount = 0;
+    // 20%概率用亲密度台词
+    if (Math.random() < 0.2 && careData.intimacy >= 10) {
+        petFrame.classList.remove('bounce');
+        void petFrame.offsetWidth;
+        petFrame.classList.add('bounce');
+        showBubble(getIntimacyLine(), 3000);
+    } else {
+        origTapForCare();
+    }
+    // 显示状态条3秒
+    statBars.classList.add('show');
+    setTimeout(() => statBars.classList.remove('show'), 3000);
+};
+
+// 初始化显示
+updateBars();
 </script>
 </body>
 </html>
