@@ -128,8 +128,29 @@ class OverlayService : Service() {
         windowManager?.addView(overlayView, layoutParams)
     }
 
-    private fun expandWindow() {}
-    private fun shrinkWindow() {}
+    private fun expandWindow() {
+        layoutParams?.let { lp ->
+            val nw = dpToPx(90); val nh = dpToPx(160)
+            val ew = dpToPx(220); val eh = dpToPx(260)
+            lp.x -= (ew - nw) / 2
+            lp.y -= (eh - nh) / 2
+            lp.width = ew
+            lp.height = eh
+            windowManager?.updateViewLayout(overlayView, lp)
+        }
+    }
+
+    private fun shrinkWindow() {
+        layoutParams?.let { lp ->
+            val nw = dpToPx(90); val nh = dpToPx(160)
+            val ew = dpToPx(220); val eh = dpToPx(260)
+            lp.x += (ew - nw) / 2
+            lp.y += (eh - nh) / 2
+            lp.width = nw
+            lp.height = nh
+            windowManager?.updateViewLayout(overlayView, lp)
+        }
+    }
 
     @SuppressLint("ClickableAccessibility")
     private fun setupTouchListener() {
@@ -141,10 +162,13 @@ class OverlayService : Service() {
         var tapCount = 0
         var moved = false
         var longPressTriggered = false
+        var menuVisible = false
         val longPressHandler = android.os.Handler(mainLooper)
         val longPressRunnable = Runnable {
 if (!moved) {
 longPressTriggered = true
+menuVisible = true
+expandWindow()
 overlayView?.evaluateJavascript(
 "document.getElementById('careMenu').classList.add('show'); document.getElementById('statBars').classList.add('show');", null
 )
@@ -154,14 +178,19 @@ overlayView?.evaluateJavascript(
         overlayView?.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    initialX = layoutParams!!.x
-                    initialY = layoutParams!!.y
-                    initialTouchX = event.rawX
-                    initialTouchY = event.rawY
-                    moved = false
-                    longPressTriggered = false
-                    longPressHandler.postDelayed(longPressRunnable, 2000)
-                    true
+                    if (menuVisible) {
+                        // 菜单模式下不做拖拽，不设长按定时器
+                        true
+                    } else {
+                        initialX = layoutParams!!.x
+                        initialY = layoutParams!!.y
+                        initialTouchX = event.rawX
+                        initialTouchY = event.rawY
+                        moved = false
+                        longPressTriggered = false
+                        longPressHandler.postDelayed(longPressRunnable, 2000)
+                        true
+                    }
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val dx = event.rawX - initialTouchX
@@ -207,6 +236,9 @@ if (!moved && !longPressTriggered) {
                          logGesture(if (tapCount == 1) "tap" else "multi_tap_$tapCount")
                      }
                      if (longPressTriggered) {
+                         // 长按刚触发的松手，不做任何操作
+                         longPressTriggered = false
+                     } else if (menuVisible) {
                          // 菜单模式下，tap根据y位置选操作
                          val tapY = event.y
                          val viewHeight = overlayView?.height ?: 300
@@ -219,7 +251,8 @@ if (!moved && !longPressTriggered) {
                              "document.getElementById('btn-play').click()"
                          }
                          overlayView?.evaluateJavascript(js, null)
-                         longPressTriggered = false
+                         menuVisible = false
+                         shrinkWindow()
                      }
                     true
                 }
