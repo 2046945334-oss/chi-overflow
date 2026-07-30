@@ -140,13 +140,13 @@ class OverlayService : Service() {
         var longPressTriggered = false
         val longPressHandler = android.os.Handler(mainLooper)
         val longPressRunnable = Runnable {
-            if (!moved) {
-                longPressTriggered = true
-                overlayView?.evaluateJavascript(
-                    "window.petEngine && window.petEngine.setState('happy', '……嗯。')", null
-                )
-            }
-        }
+if (!moved) {
+longPressTriggered = true
+overlayView?.evaluateJavascript(
+"document.getElementById('careMenu').classList.add('show'); document.getElementById('statBars').classList.add('show');", null
+)
+}
+}
 
         overlayView?.setOnTouchListener { _, event ->
             when (event.action) {
@@ -187,22 +187,40 @@ class OverlayService : Service() {
                             animateCrawlBack()
                         }
                     }
-                    if (!moved && !longPressTriggered) {
-                        val now = System.currentTimeMillis()
-                        if (now - lastTapTime < 500) {
-                            tapCount++
-                        } else {
-                            tapCount = 1
-                        }
-                        lastTapTime = now
+if (!moved && !longPressTriggered) {
+                         val now = System.currentTimeMillis()
+                         if (now - lastTapTime < 500) {
+                             tapCount++
+                         } else {
+                             tapCount = 1
+                         }
+                         lastTapTime = now
 
-                        when (tapCount) {
-                            1 -> onSingleTap()
-                            2 -> onDoubleTap()
-                            else -> onMultiTap(tapCount)
-                        }
-                        logGesture(if (tapCount == 1) "tap" else "multi_tap_$tapCount")
-                    }
+                         when (tapCount) {
+                             1 -> onSingleTap()
+                             2 -> onDoubleTap()
+                             else -> onMultiTap(tapCount)
+                         }
+                         logGesture(if (tapCount == 1) "tap" else "multi_tap_$tapCount")
+                     }
+                     if (longPressTriggered) {
+                         // 菜单模式下，tap根据y位置选操作
+                         val tapY = event.y
+                         val viewHeight = overlayView?.height ?: 300
+                         val relY = tapY / viewHeight
+                         val js = if (relY < 0.4) {
+                             // 点了上方=喂食
+                             "document.getElementById('btn-feed').click()"
+                         } else if (relY < 0.7) {
+                             // 中间=洗澡
+                             "document.getElementById('btn-wash').click()"
+                         } else {
+                             // 下方=玩耍
+                             "document.getElementById('btn-play').click()"
+                         }
+                         overlayView?.evaluateJavascript(js, null)
+                         longPressTriggered = false
+                     }
                     true
                 }
                 else -> false
