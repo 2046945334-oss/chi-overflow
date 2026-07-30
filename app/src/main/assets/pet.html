@@ -1433,7 +1433,7 @@ document.getElementById('btn-feed').addEventListener('click', (e) => {
     careData.hunger = Math.min(100, careData.hunger + 30);
     careData.intimacy += 1;
     updateBars(); saveCare();
-    careMenu.classList.remove('show');
+careMenu.classList.remove('show');
     statBars.classList.remove('show');
     setMood('angry');
     showBubble('好吃！', 2500);
@@ -1445,7 +1445,7 @@ document.getElementById('btn-wash').addEventListener('click', (e) => {
     careData.clean = Math.min(100, careData.clean + 35);
     careData.intimacy += 1;
     updateBars(); saveCare();
-    careMenu.classList.remove('show');
+careMenu.classList.remove('show');
     statBars.classList.remove('show');
     setMood('shower');
     showBubble('舒服～', 2500);
@@ -1457,7 +1457,7 @@ document.getElementById('btn-play').addEventListener('click', (e) => {
     careData.mood = Math.min(100, careData.mood + 25);
     careData.intimacy += 2;
     updateBars(); saveCare();
-    careMenu.classList.remove('show');
+careMenu.classList.remove('show');
     statBars.classList.remove('show');
     const playMoods = ['exercise', 'guitar', 'photo', 'singing'];
     setMood(playMoods[Math.floor(Math.random() * playMoods.length)]);
